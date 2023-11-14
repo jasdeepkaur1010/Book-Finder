@@ -1,0 +1,7 @@
+DROP TABLE IF EXISTS authors CASCADE;
+CREATE TABLE author (
+  id SERIAL PRIMARY KEY,
+  full_name VARCHAR(255) NOT NULL,
+   BookID INTEGER REFERENCES books(book_id),
+  status VARCHAR(50)
+);
