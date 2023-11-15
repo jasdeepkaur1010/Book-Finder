@@ -1,7 +1,7 @@
-DROP TABLE IF EXISTS libraries CASCADE;
+DROP TABLE IF EXISTS library CASCADE;
 CREATE TABLE library (
   id SERIAL PRIMARY KEY,
-  BookID INTEGER REFERENCES books(book_id),
+  BookID INTEGER REFERENCES books(id),
   status VARCHAR(50),
   address VARCHAR(255),
   postal_code VARCHAR(20),

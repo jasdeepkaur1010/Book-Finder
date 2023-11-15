@@ -2,7 +2,7 @@ DROP TABLE IF EXISTS books CASCADE;
 CREATE TABLE books (
   id SERIAL PRIMARY KEY,
   title VARCHAR(255) NOT NULL,
-  author_id INTEGER REFERENCES authors(author_id),
+  author_id INTEGER REFERENCES authors(id),
   publication_date DATE,
   genre VARCHAR(100),
   isbn VARCHAR(20) UNIQUE,
