@@ -1,0 +1,6 @@
+DROP TABLE IF EXISTS authors CASCADE;
+CREATE TABLE authors (
+  id SERIAL PRIMARY KEY,
+  full_name VARCHAR(255) NOT NULL,
+  status VARCHAR(50)
+);

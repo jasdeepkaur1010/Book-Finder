@@ -1,0 +1,6 @@
+DROP TABLE IF EXISTS readlist CASCADE;
+CREATE TABLE readlist (
+  id SERIAL PRIMARY KEY,
+  user_id INTEGER REFERENCES users(id),
+  book_id INTEGER REFERENCES books(id)
+);
