@@ -46,10 +46,10 @@ app.use('/users', usersRoutes);
 // Warning: avoid creating more routes in this file!
 // Separate them into separate routes files (see above).
 // Route for JSON data for '/users'
-app.get('/users', async (req, res) => {
+app.get('/users', async(req, res) => {
   try {
     // Your logic to retrieve data from the database
-    const userData = await getUsers(); // Replace with your logic to fetch data
+    const userData = await getUsers();
 
     // Sending the retrieved user data as JSON in the response
     res.json({ users: userData });
