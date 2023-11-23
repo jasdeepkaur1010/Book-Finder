@@ -66,7 +66,7 @@ app.get('/users', async(req, res) => {
 // API endpoint to handle user insertion based on sub_id
 app.post('/users', async (req, res) => {
   // const { sub_id } = req.params;
-  const { username, sub_id, email, isadministrator } = req.body;
+  const { username, sub_id, email, isAdministrator } = req.body;
   console.log('payload', req.body);
   try {
     // Check if a user with the provided sub_id exists
@@ -77,7 +77,7 @@ app.post('/users', async (req, res) => {
       res.status(400).json({ message: 'User with provided sub_id already exists' });
     } else {
       // If the user with the sub_id doesn't exist, insert a new user
-      const newUser = await insertUser(username, sub_id, email);
+      const newUser = await insertUser(username, sub_id, email, isAdministrator);
 
       if (newUser) {
         // Return the newly inserted user data
