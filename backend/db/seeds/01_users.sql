@@ -1,5 +1,8 @@
-insert into users (id, username, sub_id, email, isAdministrator) values (1, 'evoice0', 8505, 'whuitson0@tripadvisor.com', false);
-insert into users (id, username, sub_id, email, isAdministrator) values (2, 'astockin1', 5258, 'gwestphal1@123-reg.co.uk', false);
-insert into users (id, username, sub_id, email, isAdministrator) values (3, 'bdrohun2', 81, 'ttotterdell2@moonfruit.com', false);
-insert into users (id, username, sub_id, email, isAdministrator) values (4, 'astonbridge3', 1532, 'dphippen3@unblog.fr', false);
-insert into users (id, username, sub_id, email, isAdministrator) values (5, 'ewhiscard4', 63735, 'cpettipher4@i2i.jp', true);
+INSERT INTO users (username, sub_id, email, isadministrator) VALUES
+('evoice0', 8505, 'whuitson0@tripadvisor.com', false),
+('astockin1', 5258, 'gwestphal1@123-reg.co.uk', false),
+('bdrohun2', 81, 'ttotterdell2@moonfruit.com', false),
+('astonbridge3', 1532, 'dphippen3@unblog.fr', false),
+('ewhiscard4', 63735, 'cpettipher4@i2i.jp', true);
+INSERT INTO users (username, sub_id, email, isadministrator)
+VALUES ('evoice1', 8508, 'whuitson0@advisor.com', false);

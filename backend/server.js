@@ -2,7 +2,7 @@
 require('dotenv').config();
 const path = require('path');
 const db = require('./db/connection');
-const { getUsers, getUsersBySubId, insertUser } = require('./db/queries/users');
+const { getUsers, getUserBySubId, insertUser } = require('./db/queries/users');
 // Web server config
 const sassMiddleware = require('./lib/sass-middleware');
 const express = require('express');
@@ -50,7 +50,7 @@ app.use('/users', usersRoutes);
 
 app.get('/users', async(req, res) => {
   try {
-    // Your logic to retrieve data from the database
+    //logic to retrieve data from the database
     const userData = await getUsers();
 
     // Sending the retrieved user data as JSON in the response
@@ -63,46 +63,65 @@ app.get('/users', async(req, res) => {
 
 
 //Route to find/insert user based on sub_id//
+// API endpoint to handle user insertion based on sub_id
 app.post('/users', async (req, res) => {
-  const { username, sub_id, email } = req.body;
-  console.log('Received Payload:', req.body);
+  // const { sub_id } = req.params;
+  const { username, sub_id, email, isadministrator } = req.body;
+  console.log('payload', req.body);
   try {
-    const newUser = await insertUser(username, sub_id, email);
+    // Check if a user with the provided sub_id exists
+    const existingUser = await getUserBySubId(sub_id);
 
-    if (newUser) {
-      return res.status(201).json({ user: newUser });
+    if (existingUser.length > 0) {
+      // If the user with the sub_id exists, send back a message indicating the user already exists
+      res.status(400).json({ message: 'User with provided sub_id already exists' });
     } else {
-      return res.status(400).json({ error: 'User with provided sub_id already exists' });
+      // If the user with the sub_id doesn't exist, insert a new user
+      const newUser = await insertUser(username, sub_id, email);
+
+      if (newUser) {
+        // Return the newly inserted user data
+        res.status(201).json({ user: newUser });
+      } else {
+        // Failed to insert user
+        res.status(500).json({ error: 'Failed to insert user' });
+      }
     }
   } catch (error) {
-    return res.status(500).json({ error: error.message });
+    res.status(500).json({ error: error.message });
   }
 });
+
 
 
 // app.get('/', (req, res) => {
 //   res.send('home');
 // });
-// const users = [
-//   { id: 1, Username: 'John', sub_id: 123, email: 'john@example.com', isAdministrator: false },
-//   { id: 2, Username: 'Alice', sub_id: 456, email: 'alice@example.com', isAdministrator: true },
 
-// ];
-
-// API endpoint to get users by sub_id
+// API endpoint to handle user insertion or retrieval based on sub_id
 app.get('/users/:sub_id', async (req, res) => {
   const { sub_id } = req.params;
+  const { username, email, isadministrator } = req.body;
 
   try {
-    const query = 'SELECT * FROM users WHERE sub_id = $1';
-    const { rows: foundUsers } = await db.query(query, [sub_id]);
+    // Check if a user with the provided sub_id exists
+    const existingUser = await getUserBySubId(sub_id);
 
-    if (foundUsers.length > 0) {
-      res.json(foundUsers);
+    if (existingUser.length > 0) {
+      // If the user with the sub_id exists, return the user data
+      res.json({ user: existingUser[0] });
     } else {
-      res.status(404).json({ message: 'User not found' });
-    }
+      // If the user with the sub_id doesn't exist, insert a new user
+      const newUser = await insertUser(username, sub_id, email, isadministrator);
 
+      if (newUser) {
+        // Return the newly inserted user data
+        res.status(201).json({ user: newUser });
+      } else {
+        // Failed to insert user
+        res.status(500).json({ error: 'Failed to insert user' });
+      }
+    }
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
