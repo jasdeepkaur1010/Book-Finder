@@ -62,7 +62,22 @@ app.get('/users', async(req, res) => {
 // app.get('/', (req, res) => {
 //   res.send('home');
 // });
+const users = [
+  { id: 1, Username: 'John', sub_id: 123, email: 'john@example.com', isAdministrator: false },
+  { id: 2, Username: 'Alice', sub_id: 456, email: 'alice@example.com', isAdministrator: true },
 
+];
+
+// API endpoint to get users by sub_id
+app.get('/users/:sub_id', (req, res) => {
+  const { sub_id } = req.params;
+
+
+  const foundUsers = users.filter(user => user.sub_id === parseInt(sub_id));
+
+  // Returning the found users (or an empty array if none found)
+  res.json(foundUsers);
+});
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
 });
