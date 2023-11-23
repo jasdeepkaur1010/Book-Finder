@@ -2,11 +2,12 @@
 require('dotenv').config();
 const path = require('path');
 const db = require('./db/connection');
-const { getUsers } = require('./db/queries/users');
+const { getUsers, getUsersBySubId, insertUser } = require('./db/queries/users');
 // Web server config
 const sassMiddleware = require('./lib/sass-middleware');
 const express = require('express');
 const morgan = require('morgan');
+const bp = require('body-parser');
 
 const PORT = process.env.PORT || 8080;
 const app = express();
@@ -46,6 +47,7 @@ app.use('/users', usersRoutes);
 // Warning: avoid creating more routes in this file!
 // Separate them into separate routes files (see above).
 // Route for JSON data for '/users'
+
 app.get('/users', async(req, res) => {
   try {
     // Your logic to retrieve data from the database
@@ -59,25 +61,54 @@ app.get('/users', async(req, res) => {
   }
 });
 
+
+//Route to find/insert user based on sub_id//
+app.post('/users', async (req, res) => {
+  const { username, sub_id, email } = req.body;
+  console.log('Received Payload:', req.body);
+  try {
+    const newUser = await insertUser(username, sub_id, email);
+
+    if (newUser) {
+      return res.status(201).json({ user: newUser });
+    } else {
+      return res.status(400).json({ error: 'User with provided sub_id already exists' });
+    }
+  } catch (error) {
+    return res.status(500).json({ error: error.message });
+  }
+});
+
+
 // app.get('/', (req, res) => {
 //   res.send('home');
 // });
-const users = [
-  { id: 1, Username: 'John', sub_id: 123, email: 'john@example.com', isAdministrator: false },
-  { id: 2, Username: 'Alice', sub_id: 456, email: 'alice@example.com', isAdministrator: true },
+// const users = [
+//   { id: 1, Username: 'John', sub_id: 123, email: 'john@example.com', isAdministrator: false },
+//   { id: 2, Username: 'Alice', sub_id: 456, email: 'alice@example.com', isAdministrator: true },
 
-];
+// ];
 
 // API endpoint to get users by sub_id
-app.get('/users/:sub_id', (req, res) => {
+app.get('/users/:sub_id', async (req, res) => {
   const { sub_id } = req.params;
 
+  try {
+    const query = 'SELECT * FROM users WHERE sub_id = $1';
+    const { rows: foundUsers } = await db.query(query, [sub_id]);
 
-  const foundUsers = users.filter(user => user.sub_id === parseInt(sub_id));
+    if (foundUsers.length > 0) {
+      res.json(foundUsers);
+    } else {
+      res.status(404).json({ message: 'User not found' });
+    }
 
-  // Returning the found users (or an empty array if none found)
-  res.json(foundUsers);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
 });
+
+
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
 });
