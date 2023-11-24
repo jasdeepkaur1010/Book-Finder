@@ -20,7 +20,7 @@ function App() {
           <Link to="/contact">ContactUs</Link>
           <Link to="/loginbutton">LoginButton </Link>
           <Link to="/logoutbutton">Logout </Link>
-          <Link to="/bookform">BookForm</Link>
+          <Link to="/BookForm">BookForm</Link>
         </nav>
 
         <Routes>
