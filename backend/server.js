@@ -8,12 +8,21 @@ const sassMiddleware = require('./lib/sass-middleware');
 const express = require('express');
 const morgan = require('morgan');
 const bp = require('body-parser');
-
+const cors = require('cors');
+const bodyParser = require('body-parser')
 const PORT = process.env.PORT || 8080;
 const app = express();
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded())
+
+// parse application/json
+app.use(bodyParser.json())
 app.set('views', path.join(__dirname, '..', 'book-finder', 'views'))
 app.set('view engine', 'ejs');
+app.use(cors());
 
+// Enable CORS for a specific origin
+app.use(cors({ origin: 'http://localhost:3000' }));
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
 // 'dev' = Concise output colored by response status for development use.
 //         The :status token will be colored red for server error codes, yellow for client error codes, cyan for redirection codes, and uncolored for all other codes.
@@ -88,7 +97,9 @@ app.post('/users', async (req, res) => {
       }
     }
   } catch (error) {
+    console.log(error, 'error');
     res.status(500).json({ error: error.message });
+
   }
 });
 
