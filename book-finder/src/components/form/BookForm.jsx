@@ -15,6 +15,7 @@ const BookForm = ({ handleSubmit }) => {
     const { name, value } = e.target;
     setBook({...book, [name]: value })
   };
+  
   const onSubmit = (e) => {
     e.preventDefault();
     const newBook = {
@@ -41,7 +42,14 @@ const BookForm = ({ handleSubmit }) => {
        value={book.title}
        onChange={handleChange}
        />
-       <button type="submit"></button>
+       <input
+        type="text"
+        placeholder="Author name"
+        name="author"
+        value={book.author}
+        onChange={handleChange}
+       />
+       <button type="submit">Add Book</button>
     </form>
   );
   };
