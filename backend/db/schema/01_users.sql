@@ -2,7 +2,8 @@ DROP TABLE IF EXISTS users CASCADE;
 
 CREATE TABLE users (
   id SERIAL PRIMARY KEY,
-  Username VARCHAR(255) NOT NULL,
+  username VARCHAR(255) NOT NULL,
   sub_id INT,
-  email VARCHAR(255) NOT NULL
+  email VARCHAR(255) NOT NULL,
+  isAdministrator BOOLEAN DEFAULT FALSE
 );

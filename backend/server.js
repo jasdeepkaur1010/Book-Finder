@@ -2,11 +2,12 @@
 require('dotenv').config();
 const path = require('path');
 const db = require('./db/connection');
-const { getUsers } = require('./db/queries/users');
+const { getUsers, getUserBySubId, insertUser } = require('./db/queries/users');
 // Web server config
 const sassMiddleware = require('./lib/sass-middleware');
 const express = require('express');
 const morgan = require('morgan');
+const bp = require('body-parser');
 
 const PORT = process.env.PORT || 8080;
 const app = express();
@@ -46,9 +47,10 @@ app.use('/users', usersRoutes);
 // Warning: avoid creating more routes in this file!
 // Separate them into separate routes files (see above).
 // Route for JSON data for '/users'
+
 app.get('/users', async(req, res) => {
   try {
-    // Your logic to retrieve data from the database
+    //logic to retrieve data from the database
     const userData = await getUsers();
 
     // Sending the retrieved user data as JSON in the response
@@ -59,25 +61,73 @@ app.get('/users', async(req, res) => {
   }
 });
 
+
+//Route to find/insert user based on sub_id//
+// API endpoint to handle user insertion based on sub_id
+app.post('/users', async (req, res) => {
+  // const { sub_id } = req.params;
+  const { username, sub_id, email, isAdministrator } = req.body;
+  console.log('payload', req.body);
+  try {
+    // Check if a user with the provided sub_id exists
+    const existingUser = await getUserBySubId(sub_id);
+
+    if (existingUser.length > 0) {
+      // If the user with the sub_id exists, send back a message indicating the user already exists
+      res.status(400).json({ message: 'User with provided sub_id already exists' });
+    } else {
+      // If the user with the sub_id doesn't exist, insert a new user
+      const newUser = await insertUser(username, sub_id, email, isAdministrator);
+
+      if (newUser) {
+        // Return the newly inserted user data
+        res.status(201).json({ user: newUser });
+      } else {
+        // Failed to insert user
+        res.status(500).json({ error: 'Failed to insert user' });
+      }
+    }
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+
+
 // app.get('/', (req, res) => {
 //   res.send('home');
 // });
-const users = [
-  { id: 1, Username: 'John', sub_id: 123, email: 'john@example.com', isAdministrator: false },
-  { id: 2, Username: 'Alice', sub_id: 456, email: 'alice@example.com', isAdministrator: true },
 
-];
-
-// API endpoint to get users by sub_id
-app.get('/users/:sub_id', (req, res) => {
+// API endpoint to handle user insertion or retrieval based on sub_id
+app.get('/users/:sub_id', async (req, res) => {
   const { sub_id } = req.params;
+  const { username, email, isadministrator } = req.body;
 
+  try {
+    // Check if a user with the provided sub_id exists
+    const existingUser = await getUserBySubId(sub_id);
 
-  const foundUsers = users.filter(user => user.sub_id === parseInt(sub_id));
+    if (existingUser.length > 0) {
+      // If the user with the sub_id exists, return the user data
+      res.json({ user: existingUser[0] });
+    } else {
+      // If the user with the sub_id doesn't exist, insert a new user
+      const newUser = await insertUser(username, sub_id, email, isadministrator);
 
-  // Returning the found users (or an empty array if none found)
-  res.json(foundUsers);
+      if (newUser) {
+        // Return the newly inserted user data
+        res.status(201).json({ user: newUser });
+      } else {
+        // Failed to insert user
+        res.status(500).json({ error: 'Failed to insert user' });
+      }
+    }
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
 });
+
+
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
 });
