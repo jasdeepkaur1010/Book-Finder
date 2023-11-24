@@ -8,9 +8,13 @@ const { getBooks, addBook } = require('./db/queries/books');
 const sassMiddleware = require('./lib/sass-middleware');
 const express = require('express');
 const morgan = require('morgan');
-
+const cors = require('cors');
+const bodyParser = require('body-parser');
 const PORT = process.env.PORT || 8080;
 const app = express();
+app.use(cors());
+app.use(bodyParser.urlencoded());
+app.use(bodyParser.json());
 app.set('views', path.join(__dirname, '..', 'book-finder', 'views'))
 app.set('view engine', 'ejs');
 
@@ -47,7 +51,7 @@ app.use('/users', usersRoutes);
 // Warning: avoid creating more routes in this file!
 // Separate them into separate routes files (see above).
 // Route for JSON data for '/users'
-app.get('/users', async(req, res) => {
+app.get('/users', async (req, res) => {
   try {
     // Your logic to retrieve data from the database
     const userData = await getUsers();
@@ -60,7 +64,7 @@ app.get('/users', async(req, res) => {
   }
 });
 
-app.get('/books', async(req, res) => {
+app.get('/books', async (req, res) => {
   try {
     // Your logic to retrieve data from the database
     const bookData = await getBooks();
@@ -75,8 +79,13 @@ app.get('/books', async(req, res) => {
 //Addbook route
 app.post('/books', async (req, res) => {
   try {
-    const result = await addBook(req.body);
+    const { title, author_id, publication_date, genre, isbn, cover_image_url, summary, rating } = req.body;
 
+    // Validate that the title is provided and is not empty
+    if (!title || title.trim() === '') {
+      return res.status(400).json({ error: 'Title is required' });
+    }
+    const result = await addBook(req.body);
     if (result === 'Book added sucessfully') {
       res.status(201).send(result);
     } else if (result === 'Book with this ISBN already exists') {
