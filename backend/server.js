@@ -7,11 +7,17 @@ const { getUsers } = require('./db/queries/users');
 const sassMiddleware = require('./lib/sass-middleware');
 const express = require('express');
 const morgan = require('morgan');
+const cors = require('cors');
 
 const PORT = process.env.PORT || 8080;
 const app = express();
 app.set('views', path.join(__dirname, '..', 'book-finder', 'views'))
 app.set('view engine', 'ejs');
+
+app.use(cors());
+
+// Enable CORS for a specific origin
+app.use(cors({ origin: 'http://localhost:3000' }));
 
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
 // 'dev' = Concise output colored by response status for development use.
@@ -81,3 +87,10 @@ app.get('/users/:sub_id', (req, res) => {
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
 });
+
+// app.post('/users', (req, res) => {
+//   // Handle the POST request
+//   console.log('Received POST request to /users');
+//   // Your logic to handle the data goes here
+//   res.status(200).send('POST request to /users handled successfully');
+// });
