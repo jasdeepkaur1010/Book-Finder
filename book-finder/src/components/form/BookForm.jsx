@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import  axios  from 'axios';
-const BookForm = ({ handleSubmit }) => {
+const BookForm = ({ handleBookAdded }) => {
   const [book, setBook] = useState({
     title: '',
     author_id: '',
@@ -11,6 +11,8 @@ const BookForm = ({ handleSubmit }) => {
     summary: '',
     rating: ''
   });
+  
+  //Update state of book object//
   const handleChange = (e) => {
     const { name, value } = e.target;
     setBook({...book, [name]: value })
@@ -30,7 +32,7 @@ const BookForm = ({ handleSubmit }) => {
     summary: '', 
     rating: '' 
   });
-
+    handleBookAdded();
   } catch (error) {
     console.error('Error adding book:', error);
   }
@@ -39,7 +41,7 @@ const BookForm = ({ handleSubmit }) => {
     <form onSubmit={onSubmit}>
       <div style={{ display: 'flex', flexDirection: 'column' }}>
       <label>
-       coverImageUrl:
+       coverImageUrl
         <input
         type="text"
         placeholder="URL"
@@ -49,7 +51,7 @@ const BookForm = ({ handleSubmit }) => {
       />
       </label>
         <label>
-          Title:
+          Title
           <input
        type="text"
        placeholder="Title"
@@ -59,7 +61,7 @@ const BookForm = ({ handleSubmit }) => {
        />
        </label>
        <label>
-        Author_ID:
+        Author_ID
         <input
         type="text"
         placeholder="AuthorID"
@@ -69,7 +71,7 @@ const BookForm = ({ handleSubmit }) => {
        />
          </label>
          <label>
-          Publication Date:
+          Publication Date
          <input
         type="text"
         placeholder="Publication Date"
@@ -79,7 +81,7 @@ const BookForm = ({ handleSubmit }) => {
       />
       </label>
       <label>
-        Genre:
+        Genre
       <input
         type="text"
         placeholder="Genre"
@@ -89,7 +91,7 @@ const BookForm = ({ handleSubmit }) => {
       />
       </label>
       <label>
-       ISBN:
+       ISBN
        <input
         type="text"
         placeholder="ISBN"
@@ -99,7 +101,7 @@ const BookForm = ({ handleSubmit }) => {
       />
        </label>
        <label>
-        Summary:
+        Summary
         <input
         type="text"
         placeholder="Summary"
@@ -109,7 +111,7 @@ const BookForm = ({ handleSubmit }) => {
       />
       </label>
       <label>
-        Rating:
+        Rating
         <input
         type="text"
         placeholder="Rating"
