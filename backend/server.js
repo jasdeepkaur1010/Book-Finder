@@ -66,7 +66,7 @@ app.get('/users', async (req, res) => {
 
 app.get('/books', async (req, res) => {
   try {
-    // Your logic to retrieve data from the database
+    //retrieve data from the database
     const bookData = await getBooks();
 
     // Sending the retrieved user data as JSON in the response
