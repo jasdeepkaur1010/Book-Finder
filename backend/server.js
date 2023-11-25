@@ -138,6 +138,21 @@ app.get('/users/:sub_id', async (req, res) => {
   }
 });
 
+// Route to search for books
+app.get('/api/search-books', async (req, res) => {
+  try {
+    const { query } = req.query;
+
+    // Search for books in the database based on the query
+    const result = await pool.query('SELECT * FROM books WHERE title ILIKE $1 OR author ILIKE $1', [`%${query}%`]);
+
+    // Return the search results
+    res.json(result.rows);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
 
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
