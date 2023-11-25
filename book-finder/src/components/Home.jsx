@@ -3,16 +3,7 @@ import BookCard from './BookCard';
 import "../styles/Home.scss";
 
 const Home = () => {
-  const buttonStyle = {
-    position: 'absolute',
-    top: '50%',  
-    left: '50%',
-    transform: 'translate(200%, 80%)', 
-    backgroundColor: 'rgba(255, 255, 255, 0.7)', 
-    padding: '10px',
-    borderRadius: '5px',
-    cursor: 'pointer',
-  };
+  
   const [searchTerm, setSearchTerm] = useState('');
   const [searchResults, setSearchResults] = useState([]);
 
