@@ -79,6 +79,7 @@ app.get('/books', async (req, res) => {
 //Addbook route
 app.post('/books', async (req, res) => {
   try {
+    // eslint-disable-next-line camelcase, no-unused-vars
     const { title, author_id, publication_date, genre, isbn, cover_image_url, summary, rating } = req.body;
 
     // Validate that the title is provided and is not empty
@@ -86,7 +87,8 @@ app.post('/books', async (req, res) => {
       return res.status(400).json({ error: 'Title is required' });
     }
     const result = await addBook(req.body);
-    if (result === 'Book added sucessfully') {
+    console.log('results', result);
+    if (result === 'Book added successfully') {
       res.status(201).send(result);
     } else if (result === 'Book with this ISBN already exists') {
       res.status(400).send(result);
