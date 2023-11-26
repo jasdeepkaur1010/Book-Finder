@@ -6,15 +6,21 @@ const Profile = () => {
   const { user, isAuthenticated, isLoading } = useAuth0();
   console.log(user, 'user');
 
-  const [subId, setSubId] = useState('');
+  // const [subId, setSubId] = useState('');
   const [error, setError] = useState(null);
 
   useEffect(() => {
     const checkuser = async () => {
       try {
-        const response = await axios.get(`http://localhost:8080/users/${subId}`);
+        const response = await axios.get(`http://localhost:8080/users/${user.sub}`);
         console.log('Sub_id exists', response.data);
         setError('User with this sub_id already exists. Please choose a different one.');
+        window.sessionStorage.setItem('userId', response.data.user.id)
+        if(response) {
+          return true;
+        }
+        return false;
+
       } catch (error) {
         if (error.response && error.response.status === 404) {
           console.log('Sub_id does not exist.');
@@ -28,19 +34,22 @@ const Profile = () => {
     if(user) {
     const postData = async () => {
       try {
-        await checkuser();
-        if (!error) {
-        const postDataa = {
-          username: user.nickname,
-          email: user.email,
-          sub_id: user.sub,
-          isadministrator: false
-        };
-        console.log(postDataa, 'pd')
-        const response = await axios.post('http://localhost:8080/users', postDataa);
+        const check = await checkuser();
+        
+        if (!check) {
+          const postDataa = {
+            username: user.nickname,
+            email: user.email,
+            sub_id: user.sub,
+            isadministrator: false
+          };
+          console.log(postDataa, 'pd')
+          const response = await axios.post('http://localhost:8080/users', postDataa);
 
-        console.log('Response', response.data);
-      }
+          console.log('Response', response.data);
+          // window.sessionStorage.setItem('userId', response.data.user.id)
+
+        }
       } catch (error) {
         console.error('Error posting data: ', error);
       }
