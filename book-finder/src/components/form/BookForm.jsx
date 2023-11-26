@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import  axios  from 'axios';
-const BookForm = ({ handleBookAdded }) => {
+const BookForm = ({ handleSubmit}) => {
   const [book, setBook] = useState({
     title: '',
     author_id: '',
@@ -32,7 +32,7 @@ const BookForm = ({ handleBookAdded }) => {
     summary: '', 
     rating: '' 
   });
-    handleBookAdded();
+    handleSubmit();
   } catch (error) {
     console.error('Error adding book:', error);
   }
