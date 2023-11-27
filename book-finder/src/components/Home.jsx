@@ -1,26 +1,38 @@
-import React, { useState } from 'react';
-import backgroundImage from './Books.jpg';
+import React, { useState, useEffect } from 'react';
+// import backgroundImage from './Books.jpg';
 import Profile from './Profile';
 import BookCard from './BookCard';
+import axios from 'axios';
 
 import '../styles/Home.scss';
 
 const Home = () => {
   const [searchTerm, setSearchTerm] = useState('');
-  const buttonStyle = {
-    position: 'absolute',
-    top: '50%',  
-    left: '50%',
-    transform: 'translate(200%, 80%)', 
-    backgroundColor: 'rgba(255, 255, 255, 0.7)', 
-    padding: '10px',
-    borderRadius: '5px',
-    cursor: 'pointer',
+  const [searchResults, setSearchResults] = useState([]);
+  
+  const handleSearch = async () => {
+    try {
+      // Make a request to your search-books API endpoint using axios
+      const response = await axios.get(`http://localhost:8080/api/search-books?query=${searchTerm}`);
+      
+      // Check if the request was successful
+      if (response.status === 200) {
+        // Update the searchResults state with the fetched results
+        setSearchResults(response.data);
+      } else {
+        throw new Error('Failed to fetch search results');
+      }
+    } catch (error) {
+      console.error('Error during search:', error.message);
+      // Handle the error, e.g., display an error message to the user
+    }
   };
+  
+  useEffect(() => {
+    // You might want to add additional logic here if needed when the searchTerm changes
+    // For example, debouncing the search to avoid making requests on every keystroke
+  }, [searchTerm]);
 
-  const handleSearch = () => {
-    console.log(`Searching for books with term: ${searchTerm}`);
-  };
 
   // Dummy book data for illustration
   const dummyBooks = [
@@ -29,9 +41,9 @@ const Home = () => {
     { id: 1, title: 'Book 1', author: 'Author 1', imageUrl: 'https://m.media-amazon.com/images/I/81Fyh2mrw4L._SY466_.jpg' },
     { id: 1, title: 'Book 1', author: 'Author 1', imageUrl: 'https://m.media-amazon.com/images/I/81Fyh2mrw4L._SY466_.jpg' },
     { id: 1, title: 'Book 1', author: 'Author 1', imageUrl: 'https://m.media-amazon.com/images/I/81Fyh2mrw4L._SY466_.jpg' },
-    { id: 1, title: 'Book 1', author: 'Author 1', imageUrl: 'https://m.media-amazon.com/images/I/81Fyh2mrw4L._SY466_.jpg' },
-    { id: 1, title: 'Book 1', author: 'Author 1', imageUrl: 'https://m.media-amazon.com/images/I/81Fyh2mrw4L._SY466_.jpg' },
-    { id: 1, title: 'Book 1', author: 'Author 1', imageUrl: 'https://m.media-amazon.com/images/I/81Fyh2mrw4L._SY466_.jpg' },
+    { id: 1, title: 'Book 2', author: 'Author 2', imageUrl: 'https://m.media-amazon.com/images/I/41SKsBaGXRL._SY445_SX342_.jpg' },
+    { id: 1, title: 'Book 2', author: 'Author 2', imageUrl: 'https://m.media-amazon.com/images/I/41SKsBaGXRL._SY445_SX342_.jpg' },
+    { id: 1, title: 'Book 2', author: 'Author 2', imageUrl: 'https://m.media-amazon.com/images/I/41SKsBaGXRL._SY445_SX342_.jpg' },
 
   ];
 
