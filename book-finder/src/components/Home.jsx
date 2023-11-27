@@ -12,7 +12,7 @@ const Home = () => {
   
   const handleSearch = async () => {
     try {
-      // Make a request to your search-books API endpoint using axios
+      // Make a request to search-books API endpoint using axios
       const response = await axios.get(`http://localhost:8080/api/search-books?query=${searchTerm}`);
       
       // Check if the request was successful
@@ -59,7 +59,7 @@ const Home = () => {
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
-        <button onClick={handleSearch}>Search</button>
+        <button onClick={() => handleSearch()}>Search</button>
       </div>
       <div className="book-cards">
         {dummyBooks.map((book) => (
