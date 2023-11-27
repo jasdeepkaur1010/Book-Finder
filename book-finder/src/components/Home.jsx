@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
-// import backgroundImage from './Books.jpg';
-import Profile from './Profile';
-import BookCard from './BookCard';
-import axios from 'axios';
 
-import '../styles/Home.scss';
+import React, { useState, useEffect } from 'react';
+import BookCard from './BookCard';
+import "../styles/Home.scss";
+import backgroundImage from './Books.jpg';
+import Profile from './Profile';
+import axios from 'axios';
 
 const Home = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -49,6 +49,22 @@ const Home = () => {
 
   return (
     <div className='homepage'>
+      <h1>Book Finder</h1>
+        <div className="search-bar">
+        <input
+          type="text"
+          placeholder="Search for books..."
+          value={searchTerm}
+          onChange={handleSearch}
+        />
+      </div>
+
+      <div className="book-cards">
+        {searchResults.map((book) => (
+          <BookCard key={book.id} title={book.title} author={book.author} />
+        ))}
+      </div>
+
       <Profile />
       <h1>Book Finder</h1>
       <div className="search-bar">
