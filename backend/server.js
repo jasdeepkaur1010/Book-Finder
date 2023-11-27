@@ -2,7 +2,6 @@
 require('dotenv').config();
 const path = require('path');
 const db = require('./db/connection');
-const { getUsers } = require('./db/queries/users');
 const { getBooks, addBook } = require('./db/queries/books');
 const { getUsers, getUserBySubId, insertUser } = require('./db/queries/users');
 // Web server config
