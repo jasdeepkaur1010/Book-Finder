@@ -1,13 +1,51 @@
 import { useAuth0 } from "@auth0/auth0-react";
 import React, { useEffect, useState } from "react";
 import axios from 'axios';
+import AddBook from "./AddBook";
 
 const Profile = () => {
   const { user, isAuthenticated, isLoading } = useAuth0();
   console.log(user, 'user');
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [showAddBook, setShowAddBook] = useState(false); // State to toggle AddBook form
 
   // const [subId, setSubId] = useState('');
   const [error, setError] = useState(null);
+
+  const checkAdminStatus = async () => {
+    try {
+      const response = await axios.get(`http://localhost:8080/users/${user.sub}`);
+      setIsAdmin(response.data.isadministrator);
+      // If the user is an admin, show the AddBook form initially
+      if (response.data.isadministrator) {
+        setShowAddBook(true);
+      }
+    } catch (error) {
+      console.error('Error fetching admin status:', error.message);
+    }
+  };
+
+  const toggleAdminStatus = async () => {
+    try {
+      const response = await axios.put(`http://localhost:8080/users/${user.sub}`, { isadministrator: !isAdmin });
+      setIsAdmin(response.data.isadministrator);
+      // If the user becomes an admin, show the AddBook form
+      if (response.data.isadministrator) {
+        setShowAddBook(true);
+      } else {
+        setShowAddBook(false);
+      }
+    } catch (error) {
+      console.error('Error toggling admin status:', error.message);
+    }
+  };
+
+  useEffect(() => {
+    if (isAuthenticated && user) {
+      checkAdminStatus();
+
+    }
+  }, [isAuthenticated, user]);
 
   useEffect(() => {
     const checkuser = async () => {
@@ -69,6 +107,20 @@ const Profile = () => {
         <img src={user.picture} alt={user.name} />
         <h2>{user.name}</h2>
         <p>{user.email}</p>
+        {isAdmin ? (
+          <div>
+            <p>You are an Administrator</p>
+            {/* Render the AddBook component for admins */}
+            {showAddBook && <AddBook />}
+          </div>
+        ) : (
+          <div>
+            <p>Would you like to become an Administrator?</p>
+            <button onClick={toggleAdminStatus}>
+              {isAdmin ? 'Revoke Admin Privileges' : 'Become an Administrator'}
+            </button>
+          </div>
+        )}
       </div>
     )
   );
