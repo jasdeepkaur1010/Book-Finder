@@ -2,36 +2,27 @@
 require('dotenv').config();
 const path = require('path');
 const db = require('./db/connection');
-<<<<<<< HEAD
 const { getUsers } = require('./db/queries/users');
 const { getBooks, addBook } = require('./db/queries/books');
-=======
 const { getUsers, getUserBySubId, insertUser } = require('./db/queries/users');
->>>>>>> master
 // Web server config
 const sassMiddleware = require('./lib/sass-middleware');
 const express = require('express');
 const morgan = require('morgan');
-<<<<<<< HEAD
 const cors = require('cors');
 const bodyParser = require('body-parser');
-const PORT = process.env.PORT || 8080;
 const app = express();
 app.use(cors());
 app.use(bodyParser.urlencoded());
 app.use(bodyParser.json());
-=======
 const bp = require('body-parser');
 const cors = require('cors');
 const bodyParser = require('body-parser')
 const PORT = process.env.PORT || 8080;
-const app = express();
 // parse application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded())
 
 // parse application/json
 app.use(bodyParser.json())
->>>>>>> master
 app.set('views', path.join(__dirname, '..', 'book-finder', 'views'))
 app.set('view engine', 'ejs');
 app.use(cors());
