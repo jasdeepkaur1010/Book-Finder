@@ -3,23 +3,24 @@ require('dotenv').config();
 const path = require('path');
 const db = require('./db/connection');
 const { getBooks, addBook } = require('./db/queries/books');
-const { getUsers, getUserBySubId, insertUser } = require('./db/queries/users');
+const { getUsers, getUserBySubId, insertUser, searchBooks } = require('./db/queries/users');
 // Web server config
 const sassMiddleware = require('./lib/sass-middleware');
 const express = require('express');
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const app = express();
-app.use(cors());
+const cors = require('cors');
 app.use(bodyParser.urlencoded());
 app.use(bodyParser.json());
-const bp = require('body-parser');
-const cors = require('cors');
+app.use(cors());
+// const bp = require('body-parser');
+
 const PORT = process.env.PORT || 8080;
 // parse application/x-www-form-urlencoded
 
 // parse application/json
-app.use(bodyParser.json());
+// app.use(bodyParser.json());
 app.set('views', path.join(__dirname, '..', 'book-finder', 'views'))
 app.set('view engine', 'ejs');
 app.use(cors());
@@ -180,15 +181,15 @@ app.get('/users/:sub_id', async (req, res) => {
 });
 
 // Route to search for books
-app.get('/api/search-books', async (req, res) => {
+app.get('/books', async (req, res) => {
   try {
     const { query } = req.query;
 
     // Search for books in the database based on the query
-    const result = await pool.query('SELECT * FROM books WHERE title ILIKE $1 OR author ILIKE $1', [`%${query}%`]);
-
+    // const result = await db.query('SELECT * FROM books WHERE title ILIKE $1 OR author_id ILIKE $1', [`%${query}%`]);
+    const result = await searchBooks(query);
     // Return the search results
-    res.json(result.rows);
+    res.json(result);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Internal Server Error' });
