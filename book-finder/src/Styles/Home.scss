@@ -1,0 +1,90 @@
+.homepage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-size: cover;
+  background-position: center;
+  color: rgb(0, 0, 0)929; // Set text color to white or a color that contrasts well with the background
+}
+
+h1 {
+  font-size: 2em;
+  margin-bottom: 20px;
+}
+
+.search-bar {
+  margin: 20px 0;
+}
+
+input {
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-right: 10px;
+}
+
+button {
+  padding: 10px 20px;
+  font-size: 1rem;
+  background-color: #007BFF;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.background-image {
+  width: 100%;
+  height: auto;
+}
+
+a {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(200%, 80%);
+  background-color: rgba(255, 255, 255, 0.7);
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  text-decoration: none;
+  color: #333;
+}
+
+.book-cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+
+  .book-card {
+    margin: 10px;
+    padding: 15px;
+    background-color: rgba(255, 255, 255, 0.7);
+    border-radius: 5px;
+    width: 200px; // Adjust width as needed
+    text-align: center;
+
+    img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 3px;
+      margin-bottom: 10px;
+    }
+
+    h3 {
+      font-size: 1.2em;
+      margin-bottom: 5px;
+    }
+
+    p {
+      font-size: 1em;
+      margin: 0;
+    }
+  }
+}
+
+// Add any additional styling as needed
+

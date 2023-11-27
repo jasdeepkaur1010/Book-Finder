@@ -28,11 +28,6 @@ const Home = () => {
     }
   };
   
-  useEffect(() => {
-    // You might want to add additional logic here if needed when the searchTerm changes
-    // For example, debouncing the search to avoid making requests on every keystroke
-  }, [searchTerm]);
-
 
   // Dummy book data for illustration
   const dummyBooks = [
@@ -49,16 +44,6 @@ const Home = () => {
 
   return (
     <div >
-      {/* <h1>Book Finder</h1>
-        <div className="search-bar">
-        <input
-          type="text"
-          placeholder="Search for books..."
-          value={searchTerm}
-          onChange={handleSearch}
-        />
-      </div> */}
-
       <div className="book-cards">
         {searchResults.map((book) => (
           <BookCard key={book.id} title={book.title} author={book.author} />
@@ -81,8 +66,6 @@ const Home = () => {
           <BookCard key={book.id} title={book.title} author={book.author} imageUrl={book.imageUrl} />
         ))}
       </div>
-      {/* <img width={1500} height={690} src={backgroundImage} className="background-image" alt="backgroundImage" />
-      <a href="/login" style={buttonStyle}>Get started here!</a> */}
     </div>
   );
 };
