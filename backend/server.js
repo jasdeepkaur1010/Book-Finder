@@ -8,7 +8,6 @@ const { getUsers, getUserBySubId, insertUser } = require('./db/queries/users');
 const sassMiddleware = require('./lib/sass-middleware');
 const express = require('express');
 const morgan = require('morgan');
-const cors = require('cors');
 const bodyParser = require('body-parser');
 const app = express();
 app.use(cors());
@@ -16,12 +15,11 @@ app.use(bodyParser.urlencoded());
 app.use(bodyParser.json());
 const bp = require('body-parser');
 const cors = require('cors');
-const bodyParser = require('body-parser')
 const PORT = process.env.PORT || 8080;
 // parse application/x-www-form-urlencoded
 
 // parse application/json
-app.use(bodyParser.json())
+app.use(bodyParser.json());
 app.set('views', path.join(__dirname, '..', 'book-finder', 'views'))
 app.set('view engine', 'ejs');
 app.use(cors());
