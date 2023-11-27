@@ -74,7 +74,7 @@ const BookForm = ({ handleSubmit}) => {
           Publication Date
          <input
         type="text"
-        placeholder="Publication Date"
+        placeholder="DD-MM-YYYY"
         name="publication_date"
         value={book.publication_date}
         onChange={handleChange}

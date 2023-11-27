@@ -37,19 +37,19 @@ const Home = () => {
   // Dummy book data for illustration
   const dummyBooks = [
     { id: 1, title: 'Book 1', author: 'Author 1', imageUrl: 'https://m.media-amazon.com/images/I/81Fyh2mrw4L._SY466_.jpg' },
-    { id: 1, title: 'Book 1', author: 'Author 1', imageUrl: 'https://m.media-amazon.com/images/I/81Fyh2mrw4L._SY466_.jpg' },
-    { id: 1, title: 'Book 1', author: 'Author 1', imageUrl: 'https://m.media-amazon.com/images/I/81Fyh2mrw4L._SY466_.jpg' },
-    { id: 1, title: 'Book 1', author: 'Author 1', imageUrl: 'https://m.media-amazon.com/images/I/81Fyh2mrw4L._SY466_.jpg' },
-    { id: 1, title: 'Book 1', author: 'Author 1', imageUrl: 'https://m.media-amazon.com/images/I/81Fyh2mrw4L._SY466_.jpg' },
-    { id: 1, title: 'Book 2', author: 'Author 2', imageUrl: 'https://m.media-amazon.com/images/I/41SKsBaGXRL._SY445_SX342_.jpg' },
-    { id: 1, title: 'Book 2', author: 'Author 2', imageUrl: 'https://m.media-amazon.com/images/I/41SKsBaGXRL._SY445_SX342_.jpg' },
-    { id: 1, title: 'Book 2', author: 'Author 2', imageUrl: 'https://m.media-amazon.com/images/I/41SKsBaGXRL._SY445_SX342_.jpg' },
+    { id: 2, title: 'Book 1', author: 'Author 1', imageUrl: 'https://m.media-amazon.com/images/I/81Fyh2mrw4L._SY466_.jpg' },
+    { id: 3, title: 'Book 1', author: 'Author 1', imageUrl: 'https://m.media-amazon.com/images/I/81Fyh2mrw4L._SY466_.jpg' },
+    { id: 4, title: 'Book 1', author: 'Author 1', imageUrl: 'https://m.media-amazon.com/images/I/81Fyh2mrw4L._SY466_.jpg' },
+    { id: 5, title: 'Book 1', author: 'Author 1', imageUrl: 'https://m.media-amazon.com/images/I/81Fyh2mrw4L._SY466_.jpg' },
+    { id: 6, title: 'Book 2', author: 'Author 2', imageUrl: 'https://m.media-amazon.com/images/I/41SKsBaGXRL._SY445_SX342_.jpg' },
+    { id: 7, title: 'Book 2', author: 'Author 2', imageUrl: 'https://m.media-amazon.com/images/I/41SKsBaGXRL._SY445_SX342_.jpg' },
+    { id: 8, title: 'Book 2', author: 'Author 2', imageUrl: 'https://m.media-amazon.com/images/I/41SKsBaGXRL._SY445_SX342_.jpg' },
 
   ];
 
   return (
-    <div className='homepage'>
-      <h1>Book Finder</h1>
+    <div >
+      {/* <h1>Book Finder</h1>
         <div className="search-bar">
         <input
           type="text"
@@ -57,7 +57,7 @@ const Home = () => {
           value={searchTerm}
           onChange={handleSearch}
         />
-      </div>
+      </div> */}
 
       <div className="book-cards">
         {searchResults.map((book) => (
