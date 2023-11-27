@@ -9,16 +9,16 @@ import axios from 'axios';
 const Home = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [searchResults, setSearchResults] = useState([]);
-  
+
   const handleSearch = async () => {
     try {
-      // Make a request to search-books API endpoint using axios
-      const response = await axios.get(`http://localhost:8080/api/search-books?query=${searchTerm}`);
-      
+      // Make a request to your books API endpoint for searching
+      const response = await axios.get(`http://localhost:8080/books?query=${searchTerm}`);
+  
       // Check if the request was successful
       if (response.status === 200) {
         // Update the searchResults state with the fetched results
-        setSearchResults(response.data);
+        setSearchResults(response.data.users); // Assuming the response structure is { users: [...] }
       } else {
         throw new Error('Failed to fetch search results');
       }
@@ -44,12 +44,6 @@ const Home = () => {
 
   return (
     <div >
-      <div className="book-cards">
-        {searchResults.map((book) => (
-          <BookCard key={book.id} title={book.title} author={book.author} />
-        ))}
-      </div>
-
       <Profile />
       <h1>Book Finder</h1>
       <div className="search-bar">
@@ -59,8 +53,15 @@ const Home = () => {
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
-        <button onClick={() => handleSearch()}>Search</button>
+        <button onClick={handleSearch}>Search</button>
       </div>
+
+      <div className="book-cards">
+        {searchResults.map((book) => (
+          <BookCard key={book.id} title={book.title} author={book.author} imageUrl={book.imageUrl} />
+        ))}
+      </div>
+
       <div className="book-cards">
         {dummyBooks.map((book) => (
           <BookCard key={book.id} title={book.title} author={book.author} imageUrl={book.imageUrl} />
