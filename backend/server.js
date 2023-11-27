@@ -2,18 +2,24 @@
 require('dotenv').config();
 const path = require('path');
 const db = require('./db/connection');
+const { getUsers } = require('./db/queries/users');
+const { getBooks, addBook } = require('./db/queries/books');
 const { getUsers, getUserBySubId, insertUser } = require('./db/queries/users');
 // Web server config
 const sassMiddleware = require('./lib/sass-middleware');
 const express = require('express');
 const morgan = require('morgan');
+const cors = require('cors');
+const bodyParser = require('body-parser');
+const app = express();
+app.use(cors());
+app.use(bodyParser.urlencoded());
+app.use(bodyParser.json());
 const bp = require('body-parser');
 const cors = require('cors');
 const bodyParser = require('body-parser')
 const PORT = process.env.PORT || 8080;
-const app = express();
 // parse application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded())
 
 // parse application/json
 app.use(bodyParser.json())
@@ -57,6 +63,7 @@ app.use('/users', usersRoutes);
 // Separate them into separate routes files (see above).
 // Route for JSON data for '/users'
 
+
 app.get('/users', async(req, res) => {
   try {
     //logic to retrieve data from the database
@@ -67,6 +74,43 @@ app.get('/users', async(req, res) => {
   } catch (error) {
     console.error('Error fetching user data:', error);
     res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+app.get('/books', async (req, res) => {
+  try {
+    //retrieve data from the database
+    const bookData = await getBooks();
+
+    // Sending the retrieved user data as JSON in the response
+    res.json({ users: bookData });
+  } catch (error) {
+    console.error('Error fetching book data:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+//Addbook route
+app.post('/books', async (req, res) => {
+  try {
+    // eslint-disable-next-line camelcase, no-unused-vars
+    const { title, author_id, publication_date, genre, isbn, cover_image_url, summary, rating } = req.body;
+
+    // Validate that the title is provided and is not empty
+    if (!title || title.trim() === '') {
+      return res.status(400).json({ error: 'Title is required' });
+    }
+    const result = await addBook(req.body);
+    console.log('results', result);
+    if (result === 'Book added successfully') {
+      res.status(201).send(result);
+    } else if (result === 'Book with this ISBN already exists') {
+      res.status(400).send(result);
+    } else {
+      res.status(500).send('Error adding book');
+    }
+  } catch (error) {
+    console.error('Error:', error);
+    res.status(500).send('Internal Server Error');
   }
 });
 

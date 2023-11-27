@@ -7,7 +7,8 @@ import Contact from './components/Contact';
 import Register from './components/Register';
 import LoginButton from './components/LoginButton';
 import LogoutButton from './components/LogoutButton';
-
+import BookForm from './components/form/BookForm';
+import AddBook from './components/AddBook';
 function App() {
   return (
     <Router>
@@ -19,6 +20,7 @@ function App() {
           <Link to="/contact">ContactUs</Link>
           <Link to="/loginbutton">LoginButton </Link>
           <Link to="/logoutbutton">Logout </Link>
+          <Link to="/BookForm">BookForm</Link>
         </nav>
 
         <Routes>
@@ -29,6 +31,7 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/loginbutton" element={<LoginButton />} />
           <Route path="/logoutbutton" element={<LogoutButton />} />
+          <Route path="/BookForm" element={<AddBook />} />
         </Routes>
       </div>
     </Router>
