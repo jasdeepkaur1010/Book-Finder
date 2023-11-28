@@ -17,8 +17,9 @@ const Home = () => {
   
       // Check if the request was successful
       if (response.status === 200) {
+        // console.log(response.data);
         // Update the searchResults state with the fetched results
-        setSearchResults(response.data.users); // Assuming the response structure is { users: [...] }
+        setSearchResults(response.data); // Assuming the response structure is { users: [...] }
       } else {
         throw new Error('Failed to fetch search results');
       }
@@ -31,14 +32,14 @@ const Home = () => {
 
   // Dummy book data for illustration
   const dummyBooks = [
-    { id: 1, title: 'Book 1', author: 'Author 1', imageUrl: 'https://m.media-amazon.com/images/I/81Fyh2mrw4L._SY466_.jpg' },
-    { id: 2, title: 'Book 1', author: 'Author 1', imageUrl: 'https://m.media-amazon.com/images/I/81Fyh2mrw4L._SY466_.jpg' },
-    { id: 3, title: 'Book 1', author: 'Author 1', imageUrl: 'https://m.media-amazon.com/images/I/81Fyh2mrw4L._SY466_.jpg' },
-    { id: 4, title: 'Book 1', author: 'Author 1', imageUrl: 'https://m.media-amazon.com/images/I/81Fyh2mrw4L._SY466_.jpg' },
-    { id: 5, title: 'Book 1', author: 'Author 1', imageUrl: 'https://m.media-amazon.com/images/I/81Fyh2mrw4L._SY466_.jpg' },
-    { id: 6, title: 'Book 2', author: 'Author 2', imageUrl: 'https://m.media-amazon.com/images/I/41SKsBaGXRL._SY445_SX342_.jpg' },
-    { id: 7, title: 'Book 2', author: 'Author 2', imageUrl: 'https://m.media-amazon.com/images/I/41SKsBaGXRL._SY445_SX342_.jpg' },
-    { id: 8, title: 'Book 2', author: 'Author 2', imageUrl: 'https://m.media-amazon.com/images/I/41SKsBaGXRL._SY445_SX342_.jpg' },
+    { id: 1, title: 'Book 1', author: 'Author 1', cover_image_url: 'https://m.media-amazon.com/images/I/81Fyh2mrw4L._SY466_.jpg' },
+    { id: 2, title: 'Book 1', author: 'Author 1', cover_image_url: 'https://m.media-amazon.com/images/I/81Fyh2mrw4L._SY466_.jpg' },
+    { id: 3, title: 'Book 1', author: 'Author 1', cover_image_url: 'https://m.media-amazon.com/images/I/81Fyh2mrw4L._SY466_.jpg' },
+    { id: 4, title: 'Book 1', author: 'Author 1', cover_image_url: 'https://m.media-amazon.com/images/I/81Fyh2mrw4L._SY466_.jpg' },
+    { id: 5, title: 'Book 1', author: 'Author 1', cover_image_url: 'https://m.media-amazon.com/images/I/81Fyh2mrw4L._SY466_.jpg' },
+    { id: 6, title: 'Book 2', author: 'Author 2', cover_image_url: 'https://m.media-amazon.com/images/I/41SKsBaGXRL._SY445_SX342_.jpg' },
+    { id: 7, title: 'Book 2', author: 'Author 2', cover_image_url: 'https://m.media-amazon.com/images/I/41SKsBaGXRL._SY445_SX342_.jpg' },
+    { id: 8, title: 'Book 2', author: 'Author 2', cover_image_url: 'https://m.media-amazon.com/images/I/41SKsBaGXRL._SY445_SX342_.jpg' },
 
   ];
 
@@ -58,13 +59,13 @@ const Home = () => {
 
       <div className="book-cards">
         {searchResults.map((book) => (
-          <BookCard key={book.id} title={book.title} author={book.author} imageUrl={book.imageUrl} />
+          <BookCard key={book.id} title={book.title} author={book.author} cover_image_url={book.cover_image_url} />
         ))}
       </div>
 
       <div className="book-cards">
         {dummyBooks.map((book) => (
-          <BookCard key={book.id} title={book.title} author={book.author} imageUrl={book.imageUrl} />
+          <BookCard key={book.id} title={book.title} author={book.author} cover_image_url={book.cover_image_url} />
         ))}
       </div>
     </div>

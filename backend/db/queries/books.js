@@ -60,7 +60,7 @@ const addBook = (book) => {
 const searchBooks = async (query) => {
   try {
     const result = await db.query(
-      'SELECT * FROM books WHERE title ILIKE $1 OR genre ILIKE $1 OR CAST(isbn as text) ILIKE $1',
+      'SELECT * FROM books WHERE title ILIKE $1 OR genre ILIKE $1 OR CAST(isbn as text) ILIKE $1 ',
       [`%${query}%`]
     );
     return result.rows;
