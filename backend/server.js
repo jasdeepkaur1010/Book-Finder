@@ -153,12 +153,13 @@ app.post('/users', async (req, res) => {
 //Post route to Library//
 
 app.post('/libraries', async (req,res) => {
-  const { UserID, BookID, status, address, postal_code, city, province } = req.body;
+  const { UserID, name, cover_photo, status, address, postal_code, city, province } = req.body;
 
   try {
     const submissionResult = await insertLibrary(
       UserID,
-      BookID,
+      name,
+      cover_photo,
       status,
       address,
       postal_code,

@@ -11,8 +11,8 @@ const getLibrary = () => {
 
 
 
-const insertLibrary = (UserID, BookID, status, address, postal_code, city, province) => {
-  return db.query('INSERT INTO libraries (UserID, BookID, status, address, postal_code, city, province) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *;', [UserID, BookID, status, address, postal_code, city, province])
+const insertLibrary = (UserID, name, cover_photo, status, address, postal_code, city, province) => {
+  return db.query('INSERT INTO libraries (UserID, name, cover_photo, status, address, postal_code, city, province) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *;', [UserID, name, cover_photo, status, address, postal_code, city, province])
     .then(newLibraryEntry => {
       return newLibraryEntry.rows[0]; // Return the newly inserted library entry
     })
