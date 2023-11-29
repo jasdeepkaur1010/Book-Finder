@@ -10,29 +10,31 @@ const getLibrary = () => {
 //get library by ID Query//
 
 
-const getLibraryById = (id) => {
-  return db.query('SELECT * FROM libraries WHERE id = $1;', [id])
-    .then(async (data) => {
-      const library = data.rows[0];
-      if (!library) {
-        throw new Error(`Library with ID ${id} not found`);
-      }
+const getLibraryById = async (id) => {
+  try {
+    const data = await db.query('SELECT * FROM libraries WHERE id = $1;', [id]);
+    const library = data.rows[0];
 
-      const booksQuery = 'SELECT * FROM books INNER JOIN library_book ON books.id = library_book.book_id WHERE library_book.library_id = $1';
-      const booksData = await db.query(booksQuery, [id]);
-      const books = booksData.rows;
+    if (!library) {
+      throw new Error(`Library with ID ${id} not found`);
+    }
 
-      // Combine library details with associated books
-      const libraryWithBooks = {
-        ...library,
-        books: books,
-      };
-
-      return libraryWithBooks;
-
-    });
+    return library;
+  } catch (error) {
+    throw new Error(`Error fetching library with ID ${id}: ${error.message}`);
+  }
 };
 
+
+const getBooksByLibraryId = async (id) => {
+  try {
+    const bookQuery = await db.query('SELECT * FROM books WHERE id IN (SELECT book_id FROM library_book WHERE library_id = $1);', [id]);
+    const books = bookQuery.rows;
+    return books;
+  } catch (error) {
+    throw new Error(`Error fetching books for libraryId${id}: ${error.message}`);
+  }
+};
 
 
 const insertLibrary = (UserID, name, cover_photo, status, address, postal_code, city, province) => {
@@ -46,4 +48,4 @@ const insertLibrary = (UserID, name, cover_photo, status, address, postal_code, 
     });
 };
 
-module.exports = { insertLibrary, getLibrary, getLibraryById };
+module.exports = { insertLibrary, getLibrary, getLibraryById, getBooksByLibraryId };
