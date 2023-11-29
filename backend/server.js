@@ -4,6 +4,8 @@ const path = require('path');
 const db = require('./db/connection');
 const { getBooks, addBook } = require('./db/queries/books');
 const { getUsers, getUserBySubId, insertUser, searchBooks, updateUserIsAdmin } = require('./db/queries/users');
+const { insertLibrary, getLibrary } = require('./db/queries/libraries');
+
 // Web server config
 const sassMiddleware = require('./lib/sass-middleware');
 const express = require('express');
@@ -148,6 +150,44 @@ app.post('/users', async (req, res) => {
 // app.get('/', (req, res) => {
 //   res.send('home');
 // });
+//Post route to Library//
+
+app.post('/libraries', async (req,res) => {
+  const { UserID, BookID, status, address, postal_code, city, province } = req.body;
+
+  try {
+    const submissionResult = await insertLibrary(
+      UserID,
+      BookID,
+      status,
+      address,
+      postal_code,
+      city,
+      province,
+    );
+    if (submissionResult) {
+      res.status(201).json({ message: 'Library data submitted successfully' });
+    } else {
+      res.status(500).json({error: 'Failed to submit library data'});
+    }
+  } catch (error) {
+    console.error('Error submitting library data:', error);
+    res.status(500).json({ error: 'Failed to submit library data' });
+  }
+});
+//Fetch
+app.get('/libraries', async (req, res) => {
+  try {
+    // Logic to fetch libraries from the database
+    const libraries = await getLibrary();
+
+    res.status(200).json({ libraries });
+  } catch (error) {
+    console.error('Error fetching libraries:', error);
+    res.status(500).json({ error: 'Failed to fetch libraries' });
+  }
+});
+
 
 // API endpoint to handle user insertion or retrieval based on sub_id
 app.get('/users/:sub_id', async (req, res) => {
