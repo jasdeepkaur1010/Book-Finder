@@ -9,16 +9,17 @@ import axios from 'axios';
 const Home = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [searchResults, setSearchResults] = useState([]);
-  
+
   const handleSearch = async () => {
     try {
-      // Make a request to search-books API endpoint using axios
-      const response = await axios.get(`http://localhost:8080/api/search-books?query=${searchTerm}`);
-      
+      // Make a request to your books API endpoint for searching
+      const response = await axios.get(`http://localhost:8080/books?query=${searchTerm}`);
+  
       // Check if the request was successful
       if (response.status === 200) {
+        // console.log(response.data);
         // Update the searchResults state with the fetched results
-        setSearchResults(response.data);
+        setSearchResults(response.data); // Assuming the response structure is { users: [...] }
       } else {
         throw new Error('Failed to fetch search results');
       }
@@ -31,25 +32,19 @@ const Home = () => {
 
   // Dummy book data for illustration
   const dummyBooks = [
-    { id: 1, title: 'Book 1', author: 'Author 1', imageUrl: 'https://m.media-amazon.com/images/I/81Fyh2mrw4L._SY466_.jpg' },
-    { id: 2, title: 'Book 1', author: 'Author 1', imageUrl: 'https://m.media-amazon.com/images/I/81Fyh2mrw4L._SY466_.jpg' },
-    { id: 3, title: 'Book 1', author: 'Author 1', imageUrl: 'https://m.media-amazon.com/images/I/81Fyh2mrw4L._SY466_.jpg' },
-    { id: 4, title: 'Book 1', author: 'Author 1', imageUrl: 'https://m.media-amazon.com/images/I/81Fyh2mrw4L._SY466_.jpg' },
-    { id: 5, title: 'Book 1', author: 'Author 1', imageUrl: 'https://m.media-amazon.com/images/I/81Fyh2mrw4L._SY466_.jpg' },
-    { id: 6, title: 'Book 2', author: 'Author 2', imageUrl: 'https://m.media-amazon.com/images/I/41SKsBaGXRL._SY445_SX342_.jpg' },
-    { id: 7, title: 'Book 2', author: 'Author 2', imageUrl: 'https://m.media-amazon.com/images/I/41SKsBaGXRL._SY445_SX342_.jpg' },
-    { id: 8, title: 'Book 2', author: 'Author 2', imageUrl: 'https://m.media-amazon.com/images/I/41SKsBaGXRL._SY445_SX342_.jpg' },
+    { id: 1, title: 'Book 1', author: 'Author 1', cover_image_url: 'https://m.media-amazon.com/images/I/81Fyh2mrw4L._SY466_.jpg' },
+    { id: 2, title: 'Book 1', author: 'Author 1', cover_image_url: 'https://m.media-amazon.com/images/I/81Fyh2mrw4L._SY466_.jpg' },
+    { id: 3, title: 'Book 1', author: 'Author 1', cover_image_url: 'https://m.media-amazon.com/images/I/81Fyh2mrw4L._SY466_.jpg' },
+    { id: 4, title: 'Book 1', author: 'Author 1', cover_image_url: 'https://m.media-amazon.com/images/I/81Fyh2mrw4L._SY466_.jpg' },
+    { id: 5, title: 'Book 1', author: 'Author 1', cover_image_url: 'https://m.media-amazon.com/images/I/81Fyh2mrw4L._SY466_.jpg' },
+    { id: 6, title: 'Book 2', author: 'Author 2', cover_image_url: 'https://m.media-amazon.com/images/I/41SKsBaGXRL._SY445_SX342_.jpg' },
+    { id: 7, title: 'Book 2', author: 'Author 2', cover_image_url: 'https://m.media-amazon.com/images/I/41SKsBaGXRL._SY445_SX342_.jpg' },
+    { id: 8, title: 'Book 2', author: 'Author 2', cover_image_url: 'https://m.media-amazon.com/images/I/41SKsBaGXRL._SY445_SX342_.jpg' },
 
   ];
 
   return (
     <div >
-      <div className="book-cards">
-        {searchResults.map((book) => (
-          <BookCard key={book.id} title={book.title} author={book.author} />
-        ))}
-      </div>
-
       <Profile />
       <h1>Book Finder</h1>
       <div className="search-bar">
@@ -59,11 +54,18 @@ const Home = () => {
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
-        <button onClick={() => handleSearch()}>Search</button>
+        <button onClick={handleSearch}>Search</button>
       </div>
+
+      <div className="book-cards">
+        {searchResults.map((book) => (
+          <BookCard key={book.id} title={book.title} author={book.author} cover_image_url={book.cover_image_url} />
+        ))}
+      </div>
+
       <div className="book-cards">
         {dummyBooks.map((book) => (
-          <BookCard key={book.id} title={book.title} author={book.author} imageUrl={book.imageUrl} />
+          <BookCard key={book.id} title={book.title} author={book.author} cover_image_url={book.cover_image_url} />
         ))}
       </div>
     </div>
