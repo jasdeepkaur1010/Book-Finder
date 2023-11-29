@@ -9,7 +9,7 @@ import LoginButton from './components/LoginButton';
 import LogoutButton from './components/LogoutButton';
 import BookForm from './components/form/BookForm';
 import AddBook from './components/AddBook';
-
+import LibraryForm from './components/form/LibraryForm';
 function App() {
   return (
     <Router>
@@ -21,6 +21,7 @@ function App() {
           <Link to="/loginbutton">LoginButton </Link>
           <Link to="/logoutbutton">Logout </Link>
           <Link to="/BookForm">BookForm</Link>
+          <Link to="/LibraryForm">LibraryForm</Link>
         </nav>
       <div>
        
@@ -34,6 +35,8 @@ function App() {
           <Route path="/loginbutton" element={<LoginButton />} />
           <Route path="/logoutbutton" element={<LogoutButton />} />
           <Route path="/BookForm" element={<AddBook />} />
+          <Route path="/LibraryForm" element={<LibraryForm />} />
+
         </Routes>
       </div>
       {/* <Home /> */}
