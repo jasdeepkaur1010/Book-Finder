@@ -3,7 +3,7 @@ require('dotenv').config();
 const path = require('path');
 const db = require('./db/connection');
 const { getBooks, addBook } = require('./db/queries/books');
-const { getUsers, getUserBySubId, insertUser, searchBooks } = require('./db/queries/users');
+const { getUsers, getUserBySubId, insertUser, searchBooks, updateUserIsAdmin } = require('./db/queries/users');
 const { insertLibrary, getLibrary } = require('./db/queries/libraries');
 
 // Web server config
@@ -147,6 +147,9 @@ app.post('/users', async (req, res) => {
   }
 });
 
+// app.get('/', (req, res) => {
+//   res.send('home');
+// });
 //Post route to Library//
 
 app.post('/libraries', async (req,res) => {
@@ -209,6 +212,25 @@ app.get('/users/:sub_id', async (req, res) => {
         // Failed to insert user
         res.status(500).json({ error: 'Failed to insert user' });
       }
+    }
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+
+app.post('/users/:sub_id', async (req, res) => {
+  const { sub_id } = req.params;
+  const { isAdministrator } = req.body;
+
+  try {
+    const updatedUser = await updateUserIsAdmin(sub_id, isAdministrator);
+
+    if (updatedUser) {
+      res.json({ user: updatedUser });
+      // res.redirect('http://localhost:3000/bookform')
+    } else {
+      res.status(404).json({ error: 'User not found or not updated' });
     }
   } catch (error) {
     res.status(500).json({ error: error.message });

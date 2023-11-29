@@ -2,51 +2,19 @@ import { useAuth0 } from "@auth0/auth0-react";
 import React, { useEffect, useState } from "react";
 import axios from 'axios';
 import AddBook from "./AddBook";
+import { Link } from 'react-router-dom';
 
 const Profile = () => {
   const { user, isAuthenticated, isLoading } = useAuth0();
   console.log(user, 'user');
+  
   const [isAdmin, setIsAdmin] = useState(false);
   const [showAddBook, setShowAddBook] = useState(false); // State to toggle AddBook form
 
   // const [subId, setSubId] = useState('');
   const [error, setError] = useState(null);
 
-  const checkAdminStatus = async () => {
-    try {
-      const response = await axios.get(`http://localhost:8080/users/${user.sub}`);
-      setIsAdmin(response.data.isadministrator);
-      // If the user is an admin, show the AddBook form initially
-      if (response.data.isadministrator) {
-        setShowAddBook(true);
-      }
-    } catch (error) {
-      console.error('Error fetching admin status:', error.message);
-    }
-  };
-
-  const toggleAdminStatus = async () => {
-    try {
-      const response = await axios.put(`http://localhost:8080/users/${user.sub}`, { isadministrator: !isAdmin });
-      setIsAdmin(response.data.isadministrator);
-      // If the user becomes an admin, show the AddBook form
-      if (response.data.isadministrator) {
-        setShowAddBook(true);
-      } else {
-        setShowAddBook(false);
-      }
-    } catch (error) {
-      console.error('Error toggling admin status:', error.message);
-    }
-  };
-
-  useEffect(() => {
-    if (isAuthenticated && user) {
-      checkAdminStatus();
-
-    }
-  }, [isAuthenticated, user]);
-
+  
   useEffect(() => {
     const checkuser = async () => {
       try {
@@ -79,7 +47,7 @@ const Profile = () => {
             username: user.nickname,
             email: user.email,
             sub_id: user.sub,
-            isadministrator: false
+            isAdministrator: false
           };
           console.log(postDataa, 'pd')
           const response = await axios.post('http://localhost:8080/users', postDataa);
@@ -93,9 +61,64 @@ const Profile = () => {
       }
     };
     postData();
+    
+  // console.log(`${encodedUserId}`, `${user.sub}`, 'encoded');
   }
   }, [user, isAuthenticated]);
 
+  const checkAdminStatus = async () => {
+    try {
+      const response = await axios.get(`http://localhost:8080/users/${user.sub}`);
+      setIsAdmin(response.data.user.isadministrator);
+      // If the user is an admin, show the AddBook form initially
+      if (response.data.user.isadministrator) {
+        setShowAddBook(true);
+      }
+    } catch (error) {
+      console.error('Error fetching admin status:', error.message);
+    }
+  };
+
+  const toggleAdminStatus = async () => {
+    try {
+      const encodedUserId = encodeURIComponent(user.sub);
+      // Send a POST request to update the administrator status
+      const response = await axios.post(`http://localhost:8080/users/${encodedUserId}`, {isAdministrator : true});
+      console.log(response.data.user, 'res');
+      // Check the actual response structure and update the state accordingly
+      setIsAdmin(response.data.user);
+
+      // If the user becomes an admin, show the AddBook form
+      setShowAddBook(response.data.user);
+      console.log(isAdmin, 'admin');
+      
+    } catch (error) {
+      console.error('Error toggling admin status:', error.message);
+    }
+  };
+  
+
+  // const toggleAdminStatus = async () => {
+  //   try {
+  //     const response = await axios.post(`http://localhost:8080/users/${user.sub}`, { isAdministrator: !isAdmin });
+  //     setIsAdmin(response.data.isadministrator);
+  //     // If the user becomes an admin, show the AddBook form
+  //     if (response.data.isadministrator) {
+  //       setShowAddBook(true);
+  //     } else {
+  //       setShowAddBook(false);
+  //     }
+  //   } catch (error) {
+  //     console.error('Error toggling admin status:', error.message);
+  //   }
+  // };
+
+  useEffect(() => {
+    if (isAuthenticated && user) {
+      checkAdminStatus();
+
+    }
+  }, [isAuthenticated, user]);
 
   if (isLoading) {
     return <div>Loading ...</div>;
@@ -109,9 +132,10 @@ const Profile = () => {
         <p>{user.email}</p>
         {isAdmin ? (
           <div>
-            <p>You are an Administrator</p>
+            <p>You are an Administrator. You can add books by clicking on the link below.</p>
+            <p><Link to="/BookForm">BookForm</Link></p>
             {/* Render the AddBook component for admins */}
-            {showAddBook && <AddBook />}
+            {/* {showAddBook && <AddBook />} */}
           </div>
         ) : (
           <div>
