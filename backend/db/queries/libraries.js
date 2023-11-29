@@ -7,7 +7,31 @@ const getLibrary = () => {
     });
 };
 
+//get library by ID Query//
 
+
+const getLibraryById = (id) => {
+  return db.query('SELECT * FROM libraries WHERE id = $1;', [id])
+    .then(async (data) => {
+      const library = data.rows[0];
+      if (!library) {
+        throw new Error(`Library with ID ${id} not found`);
+      }
+
+      const booksQuery = 'SELECT * FROM books INNER JOIN library_book ON books.id = library_book.book_id WHERE library_book.library_id = $1';
+      const booksData = await db.query(booksQuery, [id]);
+      const books = booksData.rows;
+
+      // Combine library details with associated books
+      const libraryWithBooks = {
+        ...library,
+        books: books,
+      };
+
+      return libraryWithBooks;
+
+    });
+};
 
 
 
@@ -22,4 +46,4 @@ const insertLibrary = (UserID, name, cover_photo, status, address, postal_code, 
     });
 };
 
-module.exports = { insertLibrary, getLibrary };
+module.exports = { insertLibrary, getLibrary, getLibraryById };
