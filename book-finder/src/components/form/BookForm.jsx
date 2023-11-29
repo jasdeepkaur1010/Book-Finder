@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import  axios  from 'axios';
+import  '../../styles/BookForm.scss';
+
 const BookForm = ({ handleSubmit}) => {
   const [book, setBook] = useState({
     title: '',
@@ -38,10 +40,11 @@ const BookForm = ({ handleSubmit}) => {
   }
 };
   return (
-    <form onSubmit={onSubmit}>
-      <div style={{ display: 'flex', flexDirection: 'column' }}>
-      <label>
-       coverImageUrl
+    <form onSubmit={onSubmit} className="book-form">
+    <h2>Add a Book</h2>
+      {/* <div style={{ display: 'flex', flexDirection: 'column' }}> */}
+      <div className="form-group">
+      <label htmlFor="cover_image_url">Cover Image URL</label>
         <input
         type="text"
         placeholder="URL"
@@ -49,9 +52,9 @@ const BookForm = ({ handleSubmit}) => {
         value={book.cover_image_url}
         onChange={handleChange}
       />
-      </label>
-        <label>
-          Title
+      </div>
+       <div className="form-group">
+       <label htmlFor="title">Title</label>
           <input
        type="text"
        placeholder="Title"
@@ -59,9 +62,9 @@ const BookForm = ({ handleSubmit}) => {
        value={book.title}
        onChange={handleChange}
        />
-       </label>
-       <label>
-        Author_ID
+       </div>
+       <div className="form-group">
+    <label htmlFor="author_id">Author ID</label>
         <input
         type="text"
         placeholder="AuthorID"
@@ -69,9 +72,9 @@ const BookForm = ({ handleSubmit}) => {
         value={book.author_id}
         onChange={handleChange}
        />
-         </label>
-         <label>
-          Publication Date
+       </div>
+          <div className="form-group">
+          <label htmlFor="publication_id">Publication ID</label>
          <input
         type="text"
         placeholder="DD-MM-YYYY"
@@ -79,9 +82,9 @@ const BookForm = ({ handleSubmit}) => {
         value={book.publication_date}
         onChange={handleChange}
       />
-      </label>
-      <label>
-        Genre
+      </div>
+       <div className="form-group">
+       <label htmlFor="genre">Genre</label>
       <input
         type="text"
         placeholder="Genre"
@@ -89,9 +92,9 @@ const BookForm = ({ handleSubmit}) => {
         value={book.genre}
         onChange={handleChange}
       />
-      </label>
-      <label>
-       ISBN
+      </div>
+       <div className="form-group">
+       <label htmlFor="isbn">ISBN</label>
        <input
         type="text"
         placeholder="ISBN"
@@ -99,9 +102,9 @@ const BookForm = ({ handleSubmit}) => {
         value={book.isbn}
         onChange={handleChange}
       />
-       </label>
-       <label>
-        Summary
+      </div>
+       <div className="form-group">
+    <label htmlFor="summary">Summary</label>
         <input
         type="text"
         placeholder="Summary"
@@ -109,9 +112,9 @@ const BookForm = ({ handleSubmit}) => {
         value={book.summary}
         onChange={handleChange}
       />
-      </label>
-      <label>
-        Rating
+      </div>
+       <div className="form-group">
+      <label htmlFor="rating">Rating</label>
         <input
         type="text"
         placeholder="Rating"
@@ -119,8 +122,8 @@ const BookForm = ({ handleSubmit}) => {
         value={book.rating}
         onChange={handleChange}
       />
-      </label>
-
+      </div>
+      <div className="form-group">
        <button type="submit">Add Book</button>
        </div>
     </form>
