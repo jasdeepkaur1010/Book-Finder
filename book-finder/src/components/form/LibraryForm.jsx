@@ -3,7 +3,8 @@ import axios from 'axios';
 const LibraryForm = () => {
   const [formData, setFormData] = useState({
     UserID: '',
-    BookID: '',
+    name: '',
+    cover_photo: '',
     status: '',
     address: '',
     postal_code: '',
@@ -24,7 +25,8 @@ const LibraryForm = () => {
         console.log('Form submitted successfully');
         setFormData({
           UserID: '',
-          BookID: '',
+          name: '',
+          cover_photo: '',
           status: '',
           address: '',
           postal_code: '',
@@ -55,8 +57,11 @@ const LibraryForm = () => {
         <label htmlFor="UserID">UserID:</label><br />
         <input type="number" id="UserID" name="UserID" value={formData.UserID} onChange={handleChange} required /><br />
      
-        <label htmlFor="BookID">BookID:</label><br />
-        <input type="number" id="BookID" name="BookID" value={formData.BookID} onChange={handleChange} required /><br />
+        <label htmlFor="Name">Name:</label><br />
+        <input type="text" id="name" name="name" value={formData.name} onChange={handleChange} required /><br />
+
+        <label htmlFor="Name">Cover_Photo:</label><br />
+        <input type="text" id="URL" name="cover_photo" value={formData.cover_photo} onChange={handleChange} required /><br />
 
         <label htmlFor="status">Status:</label><br />
         <input type="text" id="status" name="status" value={formData.status} onChange={handleChange} maxLength={50} required /><br />
