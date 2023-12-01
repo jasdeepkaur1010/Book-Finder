@@ -2,8 +2,8 @@
 require('dotenv').config();
 const path = require('path');
 const db = require('./db/connection');
-const { getBooks, addBook } = require('./db/queries/books');
-const { getUsers, getUserBySubId, insertUser, searchBooks, updateUserIsAdmin } = require('./db/queries/users');
+const { getBooks, addBook, getBookById, getBookReviews } = require('./db/queries/books');
+const { getUsers, getUserBySubId, insertUser, searchBooks, updateUserIsAdmin, getUserDetailsById } = require('./db/queries/users');
 const { insertLibrary, getLibrary } = require('./db/queries/libraries');
 
 // Web server config
@@ -17,6 +17,12 @@ app.use(bodyParser.urlencoded());
 app.use(bodyParser.json());
 app.use(cors());
 // const bp = require('body-parser');
+const session = require('express-session');
+app.use(session({
+  secret: 'your-secret-key', // Change this to a secure random string
+  resave: false,
+  saveUninitialized: true,
+}));
 
 const PORT = process.env.PORT || 8080;
 // parse application/x-www-form-urlencoded
@@ -118,6 +124,7 @@ app.post('/books', async (req, res) => {
 //Route to find/insert user based on sub_id//
 // API endpoint to handle user insertion based on sub_id
 app.post('/users', async (req, res) => {
+  // req.session.userId = user.id;
   // const { sub_id } = req.params;
   const { username, sub_id, email, isAdministrator } = req.body;
   console.log('payload', req.body);
@@ -253,6 +260,68 @@ app.get('/books', async (req, res) => {
   }
 });
 
+app.get('/book/:id/review', async (req, res) => {
+  const { id } = req.params;
+  // console.log(id, 'id');
+  try {
+    // Find the book by ID
+    const book = await getBookReviews(id);
+
+    // Check if the book exists
+    if (!book) {
+      return res.status(404).json({ success: false, message: 'Book not found.' });
+    }
+
+    // Return the book's ratings
+    res.json({ success: true, reviews: book});
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, message: 'Internal Server Error' });
+  }
+});
+
+app.post('/book/:id/review', async (req, res) => {
+  const bookId = req.params.id;
+  const user_id = req.session.userId;
+  const { rating, comment } = req.body;
+  console.log(bookId, user_id, rating, comment, 'reviews')
+  try {
+    // Insert the review into the database
+    const query = {
+      text: 'INSERT INTO review (book_id, user_id, rating, comment) VALUES ($1, $2, $3, $4) RETURNING *',
+      values: [bookId, user_id, rating, comment],
+    };
+
+    const result = await db.query(query);
+
+    // Send back the inserted review
+    res.status(201).json(result.rows[0]);
+  } catch (error) {
+    console.error('Error inserting review:', error.message);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+app.get('/user/:id', async (req, res) => {
+  const id = req.params.id;
+
+  try {
+    const result = await db.query('SELECT * FROM users WHERE id = $1', [id]);
+
+    if (result.rows.length > 0) {
+      const user = result.rows[0];
+      res.json({ user });
+    } else {
+      res.status(404).json({ error: 'User not found' });
+    }
+  } catch (error) {
+    console.error('Error fetching user by ID:', error.message);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
 });
+
