@@ -2,9 +2,12 @@
 require('dotenv').config();
 const path = require('path');
 const db = require('./db/connection');
-const { getBooks, addBook, updateBookStatus } = require('./db/queries/books');
-const { getUsers, getUserBySubId, insertUser, searchBooks, updateUserIsAdmin } = require('./db/queries/users');
+
+const { getBooks, addBook, searchBooks, updateBookStatus } = require('./db/queries/books');
+const { getUsers, getUserBySubId, insertUser, updateUserIsAdmin } = require('./db/queries/users');
+// const { getUsers, getUserBySubId, insertUser,  updateUserIsAdmin } = require('./db/queries/users');
 const { insertLibrary, getLibrary, getLibraryById, getBooksByLibraryId } = require('./db/queries/libraries');
+
 
 // Web server config
 const sassMiddleware = require('./lib/sass-middleware');
@@ -74,6 +77,22 @@ app.get('/users', async (req, res) => {
   } catch (error) {
     console.error('Error fetching user data:', error);
     res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+// Route to search for books
+app.get('/books', async (req, res) => {
+  try {
+    const { query } = req.query;
+   console.log("test", query);
+    // Search for books in the database based on the query
+    // const result = await db.query('SELECT * FROM books WHERE title ILIKE $1 OR author_id ILIKE $1', [`%${query}%`]);
+    const result = await searchBooks(query);
+    // Return the search results
+    res.json(result);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
   }
 });
 
@@ -247,7 +266,6 @@ app.get('/users/:sub_id', async (req, res) => {
   }
 });
 
-
 app.post('/users/:sub_id', async (req, res) => {
   const { sub_id } = req.params;
   const { isAdministrator } = req.body;
@@ -265,23 +283,6 @@ app.post('/users/:sub_id', async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
-
-// Route to search for books
-app.get('/books', async (req, res) => {
-  try {
-    const { query } = req.query;
-
-    // Search for books in the database based on the query
-    // const result = await db.query('SELECT * FROM books WHERE title ILIKE $1 OR author_id ILIKE $1', [`%${query}%`]);
-    const result = await searchBooks(query);
-    // Return the search results
-    res.json(result);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Internal Server Error' });
-  }
-});
-
 //update book status in a library//
 
 app.put('/libraries/:libraryID/books/:bookID', async (req, res) => {
