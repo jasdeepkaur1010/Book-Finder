@@ -11,6 +11,7 @@ const BookForm = ({ handleSubmit}) => {
     isbn: '',
     cover_image_url: '',
     summary: '',
+    status: '',
     rating: ''
   });
   
@@ -32,6 +33,7 @@ const BookForm = ({ handleSubmit}) => {
     isbn: '',
     cover_image_url: '',
     summary: '', 
+    status: '',
     rating: '' 
   });
     handleSubmit();
