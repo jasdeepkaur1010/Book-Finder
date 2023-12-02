@@ -28,7 +28,10 @@ app.use(session({
 
 const PORT = process.env.PORT || 8080;
 // parse application/x-www-form-urlencoded
+app.use(cors());
 
+app.use(bodyParser.urlencoded());
+app.use(bodyParser.json());
 // parse application/json
 // app.use(bodyParser.json());
 app.set('views', path.join(__dirname, '..', 'book-finder', 'views'))

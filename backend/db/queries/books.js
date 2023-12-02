@@ -38,7 +38,6 @@ const addBook = (book) => {
     });
 };
 // module.exports = { getBooks, addBook };
-// const { Pool } = require('pg');
 // const db = require('../connection');
 
 // // Set up the PostgreSQL connection pool
