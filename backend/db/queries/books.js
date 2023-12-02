@@ -148,7 +148,7 @@ module.exports = {
   searchBooks,
   getBooks,
   addBook,
-  updateBookStatus
+  updateBookStatus,
   // getBookById,
   searchByAuthor,
   getBookById,

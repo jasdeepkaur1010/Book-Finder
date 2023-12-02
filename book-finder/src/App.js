@@ -39,7 +39,7 @@ function App() {
       const response = await axios.get('http://localhost:8080/books/top-rated');
 
       if (response.status === 200) {
-        // console.log(response.data, 'topratedbooks');
+        console.log(response.data, 'topratedbooks');
         setBooks(response.data.topRatedBooks);
       } else {
         throw new Error('Failed to fetch top-rated books');
@@ -53,7 +53,7 @@ function App() {
     // Fetch top-rated books on component mount
     fetchTopRatedBooks();
   }, []);
-// console.log(books, 'books');
+console.log(books, 'books');
   return (
     <Router>
        <nav className="top-nav">

@@ -11,8 +11,8 @@ const SingleBookPage = ({ dummyBooks }) => {
   // console.log(location, 'location');
   const id = location.pathname.split('/')[2];
   const dummyBook = dummyBooks[id - 1];
-  // console.log(dummyBook, 'dummybooks');
-  console.log(location, 'dummybooks');
+  console.log(dummyBook, 'dummybooks');
+  console.log(location, 'location');
   // console.log(id, 'dummybook');
 
   const [bookRatings, setBookRatings] = useState([]);
@@ -86,7 +86,7 @@ const SingleBookPage = ({ dummyBooks }) => {
     <div>
       <img src={dummyBook.cover_image_url} alt={dummyBook.title} />
       <h2>{dummyBook.title}</h2>
-      <p>Author ID: {dummyBook.author_id}</p>
+      <p>Author: {dummyBook.author_id}</p>
       <p>Publication Date: {dummyBook.publication_date}</p>
       <p>Genre: {dummyBook.genre}</p>
       <p>ISBN: {dummyBook.isbn}</p>
