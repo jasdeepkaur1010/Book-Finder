@@ -47,7 +47,13 @@ async function updateUserIsAdmin(sub_id, isadministrator) {
     // Throw an error if there's an issue with the database update
     throw new Error('Failed to update isAdmin status: ' + error.message);
   }
-}
+};
 
-module.exports = { getUsers, getUserBySubId, insertUser, updateUserIsAdmin };
+const getUserDetailsById = (id) => {
+  return db.query('SELECT * FROM users WHERE id = $1;', [id])
+    .then(data => {
+      return data.rows;
+    });
+};
+module.exports = { getUsers, getUserBySubId, insertUser, updateUserIsAdmin, getUserDetailsById };
 

@@ -1,55 +1,76 @@
-
 import React, { useState, useEffect } from 'react';
 import BookCard from './BookCard';
 import "../styles/Home.scss";
-import backgroundImage from './Books.jpg';
 import Profile from './Profile';
 import axios from 'axios';
 
-const Home = () => {
+const Home = ( {dummyBooks} ) => {
+
   const [searchTerm, setSearchTerm] = useState('');
   const [searchResults, setSearchResults] = useState([]);
-  
+  const [topRatedBooks, setTopRatedBooks] = useState([]);
+
   const handleSearch = async () => {
     try {
-      // Make a request to search-books API endpoint using axios
-      const response = await axios.get(`http://localhost:8080/api/search-books?query=${searchTerm}`);
-      
-      // Check if the request was successful
+      const response = await axios.get(`http://localhost:8080/books?query=${searchTerm}`);
+
       if (response.status === 200) {
-        // Update the searchResults state with the fetched results
         setSearchResults(response.data);
       } else {
         throw new Error('Failed to fetch search results');
       }
     } catch (error) {
       console.error('Error during search:', error.message);
-      // Handle the error, e.g., display an error message to the user
+    }
+  };
+
+  const searchByAuthor = async (author) => {
+    try {
+      const response = await axios.get(`http://localhost:8080/books?author=${author}`);
+  
+      if (response.status === 200) {
+        setSearchResults(response.data);
+      } else {
+        throw new Error('Failed to fetch search results');
+      }
+    } catch (error) {
+      console.error('Error during search by author:', error.message);
     }
   };
   
 
-  // Dummy book data for illustration
-  const dummyBooks = [
-    { id: 1, title: 'Book 1', author: 'Author 1', imageUrl: 'https://m.media-amazon.com/images/I/81Fyh2mrw4L._SY466_.jpg' },
-    { id: 2, title: 'Book 1', author: 'Author 1', imageUrl: 'https://m.media-amazon.com/images/I/81Fyh2mrw4L._SY466_.jpg' },
-    { id: 3, title: 'Book 1', author: 'Author 1', imageUrl: 'https://m.media-amazon.com/images/I/81Fyh2mrw4L._SY466_.jpg' },
-    { id: 4, title: 'Book 1', author: 'Author 1', imageUrl: 'https://m.media-amazon.com/images/I/81Fyh2mrw4L._SY466_.jpg' },
-    { id: 5, title: 'Book 1', author: 'Author 1', imageUrl: 'https://m.media-amazon.com/images/I/81Fyh2mrw4L._SY466_.jpg' },
-    { id: 6, title: 'Book 2', author: 'Author 2', imageUrl: 'https://m.media-amazon.com/images/I/41SKsBaGXRL._SY445_SX342_.jpg' },
-    { id: 7, title: 'Book 2', author: 'Author 2', imageUrl: 'https://m.media-amazon.com/images/I/41SKsBaGXRL._SY445_SX342_.jpg' },
-    { id: 8, title: 'Book 2', author: 'Author 2', imageUrl: 'https://m.media-amazon.com/images/I/41SKsBaGXRL._SY445_SX342_.jpg' },
+  const fetchTopRatedBooks = async () => {
+    try {
+      const response = await axios.get('http://localhost:8080/books/top-rated');
 
-  ];
+      if (response.status === 200) {
+        setTopRatedBooks(response.data.topRatedBooks);
+      } else {
+        throw new Error('Failed to fetch top-rated books');
+      }
+    } catch (error) {
+      console.error('Error fetching top-rated books:', error);
+    }
+  };
+
+  useEffect(() => {
+    // Fetch top-rated books on component mount
+    fetchTopRatedBooks();
+  }, []);
 
   return (
-    <div >
-      <div className="book-cards">
-        {searchResults.map((book) => (
-          <BookCard key={book.id} title={book.title} author={book.author} />
-        ))}
-      </div>
+    <div className="content">
+ {/* // return (
+   // <div >
+     // <div className="book-cards">
+       // {searchResults.map((book) => (
+         // <BookCard key={book.id} title={book.title} author={book.author} imageUrl={book.imageUrl} />
+        //))}
+     // </div>
+  
 
+  //return (
+  //  <div > */}
       <Profile />
       <h1>Book Finder</h1>
       <div className="search-bar">
@@ -59,11 +80,24 @@ const Home = () => {
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
-        <button onClick={() => handleSearch()}>Search</button>
+        <button onClick={handleSearch}>Search</button>
       </div>
+
+      <div className="search-by-author">
+        <input
+          type="text"
+          placeholder="Search by author..."
+          onChange={(e) => searchByAuthor(e.target.value)}
+        />
+        <button onClick={handleSearch}>Search</button>
+      </div>
+
       <div className="book-cards">
-        {dummyBooks.map((book) => (
-          <BookCard key={book.id} title={book.title} author={book.author} imageUrl={book.imageUrl} />
+        {/* Display search results or top-rated books based on the context */}
+        {(searchResults.length > 0 ? searchResults : topRatedBooks).map((book) => (
+          <BookCard key={book.id} id={book.id} title={book.title} author={book.author} cover_image_url={book.cover_image_url} imageUrl={book.cover_image_url} />
+        //   {/*  {dummyBooks.map((book) => (
+        //  <BookCard id={book.id} key={book.id} title={book.title} author={book.author_id} imageUrl={book.cover_image_url} /> */}
         ))}
       </div>
     </div>

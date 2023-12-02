@@ -134,6 +134,7 @@ const Profile = () => {
           <div>
             <p>You are an Administrator. You can add books by clicking on the link below.</p>
             <p><Link to="/BookForm">BookForm</Link></p>
+            <p><Link to="/LibraryForm">LibraryForm</Link></p>
             {/* Render the AddBook component for admins */}
             {/* {showAddBook && <AddBook />} */}
           </div>

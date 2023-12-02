@@ -11,6 +11,7 @@ const BookForm = ({ handleSubmit}) => {
     isbn: '',
     cover_image_url: '',
     summary: '',
+    status: '',
     rating: ''
   });
   
@@ -32,6 +33,7 @@ const BookForm = ({ handleSubmit}) => {
     isbn: '',
     cover_image_url: '',
     summary: '', 
+    status: '',
     rating: '' 
   });
     handleSubmit();
@@ -113,6 +115,16 @@ const BookForm = ({ handleSubmit}) => {
         onChange={handleChange}
       />
       </div>
+      <div className="form-group">
+      <label htmlFor="status">Status</label>
+        <input
+        type="text"
+        placeholder="Status"
+        name="status"
+        value={book.status}
+        onChange={handleChange}
+      />
+      </div>
        <div className="form-group">
       <label htmlFor="rating">Rating</label>
         <input
@@ -124,7 +136,7 @@ const BookForm = ({ handleSubmit}) => {
       />
       </div>
       <div className="form-group">
-       <button type="submit">Add Book</button>
+       <button type="submit">Submit</button>
        </div>
     </form>
   );
