@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-// import  './../styles/LibraryList.scss';
-
+import BookStatus from './BookStatus';
+import  './../styles/LibraryList.scss';
 function LibraryList() {
   const [libraries, setLibraries] = useState([]);
   const [books, setBooks] = useState([]);
@@ -68,7 +68,19 @@ function LibraryList() {
         <button onClick={handleSearch}>Search</button>
       </div>
       <ul>
-        {filteredLibraries.map(library => (
+
+        {libraries.map(library => (
+          <ul key={library.id}>
+            <div>
+            <button onClick={() => handleLibraryClick(library.id)}>
+              <img src={library.cover_photo} alt={library.name} style={{ width: '400px', height: '400px' }}/>
+            </button>
+            <div>
+              <h3>{library.name}</h3>
+              <p>
+                {library.city}, {library.province}{' '}
+              </p>
+                {/*{filteredLibraries.map(library => (
           <li key={library.id}>
             <div>
               <button onClick={() => handleLibraryClick(library.id)}>
@@ -80,15 +92,37 @@ function LibraryList() {
                 <p>
                   Address: {library.address}, {library.city}, {library.province}{' '}
                   {library.postal_code}
-                </p>
+                </p> */}
               </div>
             </div>
-          </li>
+          </ul>
         ))}
       </ul>
 
       {selectedLibraryId && selectedLibrary && books && books.length > 0 && (
-        <div className="modal">
+             <div className="modal">
+             <div className="modal-content">
+               <span className="close" onClick={closeModal}>&times;</span>
+          <h2>Book List</h2>
+          <div>
+            {books.map(book => (
+              <ul key={book.id}>
+                <div>
+                <img src={book.cover_image_url} alt={book.name} style={{ width: '300px', height: '300px' }}/>
+                  <h3>{book.title}</h3>
+                  {/* <p>author_id: {book.author_id}</p> */}
+                  <p>Genre: {book.genre}</p>
+                  <p>Summary: {book.summary}</p>
+              <p>Status: {book.status}</p>
+                  {/* <p>Publication_date: {book.publication_date}</p> */}
+                  <p></p>
+                  <BookStatus book={book} libraryId={selectedLibraryId} />
+                </div>
+              </ul>
+            ))}
+          </div>
+        </div>
+            {/*   <div className="modal">
           <div className="modal-content">
             <span className="close" onClick={closeModal}>&times;</span>
             <h2>Book List</h2>
@@ -106,7 +140,7 @@ function LibraryList() {
                 </li>
               ))}
             </ul>
-          </div>
+          </div> */}
         </div>
       )}
     </div>

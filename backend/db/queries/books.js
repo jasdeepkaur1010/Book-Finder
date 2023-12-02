@@ -11,7 +11,7 @@ const getBooks = () => {
 //AddBook query
 
 const addBook = (book) => {
-  const { title, author_id, publication_date, genre, isbn, cover_image_url, summary, rating } = book;
+  const { title, author_id, publication_date, genre, isbn, cover_image_url, summary, status, rating } = book;
   //check if book already exists with the given ISBN//
   const isbnCheck = 'SELECT * FROM books where isbn = $1';
   return db.query(isbnCheck, [isbn])
@@ -21,10 +21,10 @@ const addBook = (book) => {
 
       } else {
         const bookQuery = `
-    INSERT INTO books (title, author_id, publication_date, genre, isbn, cover_image_url, summary, rating)
-    VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+    INSERT INTO books (title, author_id, publication_date, genre, isbn, cover_image_url, summary, status, rating)
+    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
   `;
-        const values = [title, author_id, publication_date, genre, isbn, cover_image_url, summary, rating];
+        const values = [title, author_id, publication_date, genre, isbn, cover_image_url, summary, status, rating];
 
         return db.query(bookQuery, values)
           .then(() => 'Book added successfully')
@@ -119,11 +119,37 @@ const getBookReviews = async (bookId) => {
 //     throw error;
 //   }
 
+// Function to update book status in the database
+const updateBookStatus = async (libraryID, bookID, status) => {
+  console.log(typeof status);
+  console.log('Status Value:', status);
+  const updateQuery = `
+    UPDATE books
+    SET status = $1
+    WHERE id = $2
+    AND id IN (
+      SELECT book_id
+      FROM library_book
+      WHERE library_id = $3
+    )
+  `;
+
+  const updateValues = [status, bookID, libraryID];
+
+  try {
+    const result = await db.query(updateQuery, updateValues);
+    return result.rowCount > 0; // Indicates if any row was updated
+  } catch (error) {
+    throw new Error('Error updating book status: ' + error.message);
+  }
+};
 
 module.exports = {
   searchBooks,
   getBooks,
   addBook,
+  updateBookStatus
+  // getBookById,
   searchByAuthor,
   getBookById,
   getBookReviews

@@ -2,8 +2,7 @@
 require('dotenv').config();
 const path = require('path');
 const db = require('./db/connection');
-
-const { getBooks, addBook, searchBooks, getBookReviews, getBookById } = require('./db/queries/books');
+const { getBooks, addBook, searchBooks, getBookReviews, getBookById, updateBookStatus } = require('./db/queries/books');
 const { getUsers, getUserBySubId, insertUser,  updateUserIsAdmin, getUserDetailsById } = require('./db/queries/users');
 const { insertLibrary, getLibrary, getLibraryById, getBooksByLibraryId } = require('./db/queries/libraries');
 
@@ -336,6 +335,24 @@ app.post('/users/:sub_id', async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
+});
+//update book status in a library//
+
+app.put('/libraries/:libraryID/books/:bookID', async (req, res) => {
+  try {
+    const { libraryID, bookID } = req.params;
+    const { status } = req.body;
+    console.log('Request Body:', req.body);
+    const bookUpdated = await updateBookStatus(libraryID, bookID, status);
+
+    if (!bookUpdated) {
+      return res.status(404).json({ message: 'Book not found in the library.' });
+    }
+
+    res.status(200).json({ message: 'Book status updated successfully.' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server error.' });
   });
 
 app.get('/book/:id/review', async (req, res) => {
