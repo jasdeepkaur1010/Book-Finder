@@ -281,6 +281,7 @@ app.post('/users/:sub_id', async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
+  });
 
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
