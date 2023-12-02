@@ -4,7 +4,8 @@ import "../styles/Home.scss";
 import Profile from './Profile';
 import axios from 'axios';
 
-const Home = () => {
+const Home = ( {dummyBooks} ) => {
+
   const [searchTerm, setSearchTerm] = useState('');
   const [searchResults, setSearchResults] = useState([]);
   const [topRatedBooks, setTopRatedBooks] = useState([]);
@@ -59,6 +60,17 @@ const Home = () => {
 
   return (
     <div className="content">
+ // return (
+   // <div >
+     // <div className="book-cards">
+       // {searchResults.map((book) => (
+         // <BookCard key={book.id} title={book.title} author={book.author} imageUrl={book.imageUrl} />
+        //))}
+     // </div>
+  
+
+  //return (
+  //  <div >
       <Profile />
       <h1>Book Finder</h1>
       <div className="search-bar">
@@ -83,7 +95,9 @@ const Home = () => {
       <div className="book-cards">
         {/* Display search results or top-rated books based on the context */}
         {(searchResults.length > 0 ? searchResults : topRatedBooks).map((book) => (
-          <BookCard key={book.id} title={book.title} author={book.author} cover_image_url={book.cover_image_url} />
+          <BookCard key={book.id} title={book.title} author={book.author} cover_image_url={book.cover_image_url} imageUrl={book.cover_image_url} />
+          {/*  {dummyBooks.map((book) => (
+         <BookCard id={book.id} key={book.id} title={book.title} author={book.author_id} imageUrl={book.cover_image_url} /> */}
         ))}
       </div>
     </div>
