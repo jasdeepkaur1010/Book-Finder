@@ -14,11 +14,7 @@ import BookCard from './components/BookCard';
 import SingleBookPage from './components/SingleBookPage';
 import axios from 'axios';
 import { useEffect, useState } from 'react'; 
-
-
-// const  Bookss = () => {
-//   // Run the effect only once when the component mounts
-// }
+import LibraryList from './components/LibraryList';
 
 function App() {
   const dummyBooks = [
@@ -60,7 +56,7 @@ function App() {
           <Link to="/logoutbutton">Logout </Link>
           {/* <Link to="/BookForm">AddBook</Link> */}
           <Link to="/LibraryForm">LibraryForm</Link>
-          {/* <Link to="/book/:id">SingleBookPage</Link> */}
+          <Link to="/LibraryList">LibraryList</Link>
         </nav>
       <div>
        
@@ -76,6 +72,7 @@ function App() {
           <Route path="/BookForm" element={<AddBook />} />
           <Route path="/LibraryForm" element={<LibraryForm />} />
           <Route path="/book/:id" element={<SingleBookPage dummyBooks={books} />} />
+          <Route path="/LibraryList" element={<LibraryList/>} />
         </Routes>
       </div>
       {/* <Home /> */}
