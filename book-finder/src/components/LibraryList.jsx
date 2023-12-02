@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-// import  './../styles/LibraryList.scss';
+import BookStatus from './BookStatus';
+import  './../styles/LibraryList.scss';
 function LibraryList() {
   const [libraries, setLibraries] = useState([]);
   const [books, setBooks] = useState([]);
@@ -43,21 +44,19 @@ function LibraryList() {
       <h1>Library List</h1>
       <ul>
         {libraries.map(library => (
-          <li key={library.id}>
+          <ul key={library.id}>
             <div>
             <button onClick={() => handleLibraryClick(library.id)}>
-              <img src={library.cover_photo} alt={library.name} />
+              <img src={library.cover_photo} alt={library.name} style={{ width: '400px', height: '400px' }}/>
             </button>
             <div>
-              <h3>Name: {library.name}</h3>
-              <p>Status: {library.status}</p>
+              <h3>{library.name}</h3>
               <p>
-                Address: {library.address}, {library.city}, {library.province}{' '}
-                {library.postal_code}
+                {library.city}, {library.province}{' '}
               </p>
               </div>
             </div>
-          </li>
+          </ul>
         ))}
       </ul>
 
@@ -66,20 +65,23 @@ function LibraryList() {
              <div className="modal-content">
                <span className="close" onClick={closeModal}>&times;</span>
           <h2>Book List</h2>
-          <ul>
+          <div>
             {books.map(book => (
-              <li key={book.id}>
+              <ul key={book.id}>
                 <div>
+                <img src={book.cover_image_url} alt={book.name} style={{ width: '300px', height: '300px' }}/>
                   <h3>{book.title}</h3>
-                  <p>author_id: {book.author_id}</p>
+                  {/* <p>author_id: {book.author_id}</p> */}
                   <p>Genre: {book.genre}</p>
                   <p>Summary: {book.summary}</p>
-                  <p>Publication_date: {book.publication_date}</p>
+              <p>Status: {book.status}</p>
+                  {/* <p>Publication_date: {book.publication_date}</p> */}
                   <p></p>
+                  <BookStatus book={book} libraryId={selectedLibraryId} />
                 </div>
-              </li>
+              </ul>
             ))}
-          </ul>
+          </div>
         </div>
         </div>
       )}
