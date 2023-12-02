@@ -15,8 +15,8 @@ const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const app = express();
 const cors = require('cors');
-app.use(bodyParser.urlencoded());
-app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json({ extended: true }));
 app.use(cors());
 // const bp = require('body-parser');
 const session = require('express-session');
@@ -87,22 +87,54 @@ app.get('/users', async (req, res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 });
+// Route for fetching top-rated books
+app.get('/books/top-rated', async (req, res) => {
+  try {
+    // Logic to fetch top-rated books from the database
+    const topRatedBooksQuery = 'SELECT * FROM books ORDER BY rating DESC LIMIT 20;';
+    const { rows: topRatedBooks } = await db.query(topRatedBooksQuery);
 
+    res.status(200).json({ topRatedBooks });
+  } catch (error) {
+    console.error('Error fetching top-rated books:', error);
+    res.status(500).json({ error: 'Failed to fetch top-rated books' });
+  }
+});
 // Route to search for books
+// Update the /books route to include author search
 app.get('/books', async (req, res) => {
   try {
-    const { query } = req.query;
-   console.log("test", query);
-    // Search for books in the database based on the query
-    // const result = await db.query('SELECT * FROM books WHERE title ILIKE $1 OR author_id ILIKE $1', [`%${query}%`]);
-    const result = await searchBooks(query);
-    // Return the search results
+    const { query, author } = req.query;
+
+    let result;
+    if (author) {
+      // Search by author
+      result = await searchBooksByAuthor(author);
+    } else {
+      // Default search by title, genre, or ISBN
+      result = await searchBooks(query);
+    }
+
     res.json(result);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
+
+// Add a new function to search books by author
+const searchBooksByAuthor = async (author) => {
+  try {
+    const result = await db.query(
+      'SELECT books.*, authors.full_name AS author_name FROM books JOIN authors ON books.author_id = authors.id WHERE authors.full_name ILIKE $1',
+      [`%${author}%`]
+    );
+    return result.rows;
+  } catch (error) {
+    throw error;
+  }
+};
+
 
 app.get('/books', async (req, res) => {
   try {
@@ -116,6 +148,19 @@ app.get('/books', async (req, res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 });
+
+app.get('/books/searchByAuthor', async (req, res) => {
+  try {
+    const { author } = req.query;
+    const result = await searchByAuthor(author);
+
+    res.status(200).json(result);
+  } catch (error) {
+    console.error('Error during search by author:', error);
+    res.status(500).json({ error: 'Failed to fetch search results' });
+  }
+});
+
 //Addbook route
 app.post('/books', async (req, res) => {
   try {
