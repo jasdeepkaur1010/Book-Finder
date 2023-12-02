@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-catch */
 const db = require('../connection');
 
 const getBooks = () => {
@@ -36,18 +37,29 @@ const addBook = (book) => {
       throw new Error(err.message);
     });
 };
-module.exports = { getBooks, addBook };
-const { Pool } = require('pg');
+// module.exports = { getBooks, addBook };
 // const db = require('../connection');
 
-// Set up the PostgreSQL connection pool
-const pool = new Pool();
+// // Set up the PostgreSQL connection pool
+// const pool = new Pool();
 
 // Query to search for books
+// const searchBooks = async (query) => {
+//   try {
+//     const result = await pool.query(
+//       'SELECT * FROM books WHERE title ILIKE $1 OR genre ILIKE $1 OR isbn ILIKE $1',
+//       [`%${query}%`]
+//     );
+//     return result.rows;
+//   } catch (error) {
+//     throw error;
+//   }
+// };
+
 const searchBooks = async (query) => {
   try {
-    const result = await pool.query(
-      'SELECT * FROM books WHERE title ILIKE $1 OR genre ILIKE $1 OR isbn ILIKE $1',
+    const result = await db.query(
+      'SELECT * FROM books WHERE title ILIKE $1 OR genre ILIKE $1 OR CAST(isbn as text) ILIKE $1 ',
       [`%${query}%`]
     );
     return result.rows;
@@ -55,29 +67,50 @@ const searchBooks = async (query) => {
     throw error;
   }
 };
-
-// Query to get all books
-const getAllBooks = async () => {
-  try {
-    const result = await pool.query('SELECT * FROM books');
-    return result.rows;
-  } catch (error) {
-    throw error;
-  }
-};
-
-// Query to get a specific book by ID
 const getBookById = async (id) => {
   try {
-    const result = await pool.query('SELECT * FROM books WHERE id = $1', [id]);
+    const result = await db.query('SELECT * FROM books WHERE id = $1', [id]);
     return result.rows[0];
   } catch (error) {
     throw error;
   }
+}
+
+const getBookReviews = async (bookId) => {
+  try {
+    const result = await db.query('SELECT rating, comment FROM review WHERE book_id = $1', [bookId]);
+    // console.log(result.rows[0]);
+    return result.rows;
+  } catch (error) {
+    console.error('Error executing query:', error.message);
+    throw error;
+  }
 };
+
+// // Query to get all books
+// const getAllBooks = async () => {
+//   try {
+//     const result = await pool.query('SELECT * FROM books');
+//     return result.rows;
+//   } catch (error) {
+//     throw error;
+//   }
+// };
+
+// // Query to get a specific book by ID
+// const getBookById = async (id) => {
+//   try {
+//     const result = await pool.query('SELECT * FROM books WHERE id = $1', [id]);
+//     return result.rows[0];
+//   } catch (error) {
+//     throw error;
+//   }
+
 
 module.exports = {
   searchBooks,
-  getAllBooks,
+  getBooks,
+  addBook,
   getBookById,
+  getBookReviews
 };

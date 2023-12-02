@@ -32,5 +32,28 @@ const insertUser = (username, sub_id, email, isAdministrator) => {
     });
 };
 
-module.exports = { getUsers, getUserBySubId, insertUser };
+async function updateUserIsAdmin(sub_id, isadministrator) {
+  try {
+    // Construct an SQL query to update the 'isAdministrator' field for a user
+    const query = 'UPDATE users SET isAdministrator = true WHERE sub_id = $1';
+    const values = [sub_id];
+
+    // Execute the update query in the database
+    const result = await db.query(query, values);
+
+    // If the update affected rows, fetch and return the updated user data
+    return result.rowCount > 0;
+  } catch (error) {
+    // Throw an error if there's an issue with the database update
+    throw new Error('Failed to update isAdmin status: ' + error.message);
+  }
+};
+
+const getUserDetailsById = (id) => {
+  return db.query('SELECT * FROM users WHERE id = $1;', [id])
+    .then(data => {
+      return data.rows;
+    });
+};
+module.exports = { getUsers, getUserBySubId, insertUser, updateUserIsAdmin, getUserDetailsById };
 
