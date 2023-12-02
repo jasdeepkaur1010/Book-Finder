@@ -2,10 +2,8 @@
 require('dotenv').config();
 const path = require('path');
 const db = require('./db/connection');
-
-const { getBooks, addBook, searchBooks, updateBookStatus } = require('./db/queries/books');
-const { getUsers, getUserBySubId, insertUser, updateUserIsAdmin } = require('./db/queries/users');
-// const { getUsers, getUserBySubId, insertUser,  updateUserIsAdmin } = require('./db/queries/users');
+const { getBooks, addBook, searchBooks, getBookReviews, getBookById, updateBookStatus } = require('./db/queries/books');
+const { getUsers, getUserBySubId, insertUser,  updateUserIsAdmin, getUserDetailsById } = require('./db/queries/users');
 const { insertLibrary, getLibrary, getLibraryById, getBooksByLibraryId } = require('./db/queries/libraries');
 
 
@@ -16,14 +14,23 @@ const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const app = express();
 const cors = require('cors');
-app.use(bodyParser.urlencoded());
-app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json({ extended: true }));
 app.use(cors());
 // const bp = require('body-parser');
+const session = require('express-session');
+app.use(session({
+  secret: 'your-secret-key', // Change this to a secure random string
+  resave: false,
+  saveUninitialized: true,
+}));
 
 const PORT = process.env.PORT || 8080;
 // parse application/x-www-form-urlencoded
+app.use(cors());
 
+app.use(bodyParser.urlencoded());
+app.use(bodyParser.json());
 // parse application/json
 // app.use(bodyParser.json());
 app.set('views', path.join(__dirname, '..', 'book-finder', 'views'))
@@ -79,22 +86,54 @@ app.get('/users', async (req, res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 });
+// Route for fetching top-rated books
+app.get('/books/top-rated', async (req, res) => {
+  try {
+    // Logic to fetch top-rated books from the database
+    const topRatedBooksQuery = 'SELECT * FROM books ORDER BY rating DESC LIMIT 20;';
+    const { rows: topRatedBooks } = await db.query(topRatedBooksQuery);
 
+    res.status(200).json({ topRatedBooks });
+  } catch (error) {
+    console.error('Error fetching top-rated books:', error);
+    res.status(500).json({ error: 'Failed to fetch top-rated books' });
+  }
+});
 // Route to search for books
+// Update the /books route to include author search
 app.get('/books', async (req, res) => {
   try {
-    const { query } = req.query;
-   console.log("test", query);
-    // Search for books in the database based on the query
-    // const result = await db.query('SELECT * FROM books WHERE title ILIKE $1 OR author_id ILIKE $1', [`%${query}%`]);
-    const result = await searchBooks(query);
-    // Return the search results
+    const { query, author } = req.query;
+
+    let result;
+    if (author) {
+      // Search by author
+      result = await searchBooksByAuthor(author);
+    } else {
+      // Default search by title, genre, or ISBN
+      result = await searchBooks(query);
+    }
+
     res.json(result);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
+
+// Add a new function to search books by author
+const searchBooksByAuthor = async (author) => {
+  try {
+    const result = await db.query(
+      'SELECT books.*, authors.full_name AS author_name FROM books JOIN authors ON books.author_id = authors.id WHERE authors.full_name ILIKE $1',
+      [`%${author}%`]
+    );
+    return result.rows;
+  } catch (error) {
+    throw error;
+  }
+};
+
 
 app.get('/books', async (req, res) => {
   try {
@@ -108,6 +147,19 @@ app.get('/books', async (req, res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 });
+
+app.get('/books/searchByAuthor', async (req, res) => {
+  try {
+    const { author } = req.query;
+    const result = await searchByAuthor(author);
+
+    res.status(200).json(result);
+  } catch (error) {
+    console.error('Error during search by author:', error);
+    res.status(500).json({ error: 'Failed to fetch search results' });
+  }
+});
+
 //Addbook route
 app.post('/books', async (req, res) => {
   try {
@@ -137,6 +189,7 @@ app.post('/books', async (req, res) => {
 //Route to find/insert user based on sub_id//
 // API endpoint to handle user insertion based on sub_id
 app.post('/users', async (req, res) => {
+  // req.session.userId = user.id;
   // const { sub_id } = req.params;
   const { username, sub_id, email, isAdministrator } = req.body;
   console.log('payload', req.body);
@@ -300,6 +353,65 @@ app.put('/libraries/:libraryID/books/:bookID', async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Server error.' });
+  });
+
+app.get('/book/:id/review', async (req, res) => {
+  const { id } = req.params;
+  // console.log(id, 'id');
+  try {
+    // Find the book by ID
+    const book = await getBookReviews(id);
+
+    // Check if the book exists
+    if (!book) {
+      return res.status(404).json({ success: false, message: 'Book not found.' });
+    }
+
+    // Return the book's ratings
+    res.json({ success: true, reviews: book});
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, message: 'Internal Server Error' });
+  }
+});
+
+app.post('/book/:id/review', async (req, res) => {
+  const bookId = req.params.id;
+  const user_id = req.session.userId;
+  const { rating, comment } = req.body;
+  console.log(bookId, user_id, rating, comment, 'reviews')
+  try {
+    // Insert the review into the database
+    const query = {
+      text: 'INSERT INTO review (book_id, user_id, rating, comment) VALUES ($1, $2, $3, $4) RETURNING *',
+      values: [bookId, user_id, rating, comment],
+    };
+
+    const result = await db.query(query);
+
+    // Send back the inserted review
+    res.status(201).json(result.rows[0]);
+  } catch (error) {
+    console.error('Error inserting review:', error.message);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+app.get('/user/:id', async (req, res) => {
+  const id = req.params.id;
+
+  try {
+    const result = await db.query('SELECT * FROM users WHERE id = $1', [id]);
+
+    if (result.rows.length > 0) {
+      const user = result.rows[0];
+      res.json({ user });
+    } else {
+      res.status(404).json({ error: 'User not found' });
+    }
+  } catch (error) {
+    console.error('Error fetching user by ID:', error.message);
+    res.status(500).json({ error: 'Internal Server Error' });
   }
 });
 
@@ -307,3 +419,4 @@ app.put('/libraries/:libraryID/books/:bookID', async (req, res) => {
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
 });
+

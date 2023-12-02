@@ -10,4 +10,5 @@ CREATE TABLE books (
   summary TEXT,
   status VARCHAR(50),
   rating NUMERIC(3, 2)
+  comment VARCHAR(255)
 );
