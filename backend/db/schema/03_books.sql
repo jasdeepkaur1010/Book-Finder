@@ -8,5 +8,6 @@ CREATE TABLE books (
   isbn VARCHAR(20) UNIQUE,
   cover_image_url VARCHAR(255),
   summary TEXT,
+  status VARCHAR(50),
   rating NUMERIC(3, 2)
 );
