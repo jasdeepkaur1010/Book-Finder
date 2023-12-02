@@ -4,10 +4,9 @@
   align-items: center;
   justify-content: center;
   height: 100vh;
-  background-image: url('./Books.jpg');
   background-size: cover;
   background-position: center;
-  color: #fff; // Set text color to white or a color that contrasts well with the background
+  color: rgb(0, 0, 0)929; // Set text color to white or a color that contrasts well with the background
 }
 
 h1 {
@@ -43,7 +42,7 @@ button {
 }
 
 a {
-  // position: absolute;
+  position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(200%, 80%);

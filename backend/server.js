@@ -3,9 +3,10 @@ require('dotenv').config();
 const path = require('path');
 const db = require('./db/connection');
 
-const { getBooks, addBook, searchBooks } = require('./db/queries/books');
-const { getUsers, getUserBySubId, insertUser, updateUserIsAdmin } = require('./db/queries/users');
-const { insertLibrary, getLibrary } = require('./db/queries/libraries');
+const { getBooks, addBook, searchBooks, } = require('./db/queries/books');
+const { getUsers, getUserBySubId, insertUser,  updateUserIsAdmin } = require('./db/queries/users');
+const { insertLibrary, getLibrary, getLibraryById, getBooksByLibraryId } = require('./db/queries/libraries');
+
 
 // Web server config
 const sassMiddleware = require('./lib/sass-middleware');
@@ -65,7 +66,7 @@ app.use('/users', usersRoutes);
 // Route for JSON data for '/users'
 
 
-app.get('/users', async(req, res) => {
+app.get('/users', async (req, res) => {
   try {
     //logic to retrieve data from the database
     const userData = await getUsers();
@@ -150,10 +151,8 @@ app.post('/users', async (req, res) => {
       const newUser = await insertUser(username, sub_id, email, isAdministrator);
 
       if (newUser) {
-        // Return the newly inserted user data
         res.status(201).json({ user: newUser });
       } else {
-        // Failed to insert user
         res.status(500).json({ error: 'Failed to insert user' });
       }
     }
@@ -169,13 +168,14 @@ app.post('/users', async (req, res) => {
 // });
 //Post route to Library//
 
-app.post('/libraries', async (req,res) => {
-  const { UserID, BookID, status, address, postal_code, city, province } = req.body;
+app.post('/libraries', async (req, res) => {
+  const { UserID, name, cover_photo, status, address, postal_code, city, province } = req.body;
 
   try {
     const submissionResult = await insertLibrary(
       UserID,
-      BookID,
+      name,
+      cover_photo,
       status,
       address,
       postal_code,
@@ -185,7 +185,7 @@ app.post('/libraries', async (req,res) => {
     if (submissionResult) {
       res.status(201).json({ message: 'Library data submitted successfully' });
     } else {
-      res.status(500).json({error: 'Failed to submit library data'});
+      res.status(500).json({ error: 'Failed to submit library data' });
     }
   } catch (error) {
     console.error('Error submitting library data:', error);
@@ -205,6 +205,36 @@ app.get('/libraries', async (req, res) => {
   }
 });
 
+//Route to get library by ID//
+
+app.get('/libraries/:id', async (req, res) => {
+  const { id } = req.params;
+  try {
+    //logic to retrieve data from the database
+    const libraryData = await getLibraryById(id);
+
+    // Sending the retrieved user data as JSON in the response
+    res.json({ libraries: libraryData });
+  } catch (error) {
+    console.error('Error fetching library data:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+
+app.get('/libraries/:id/books', async (req, res) => {
+  const { id } = req.params;
+  try {
+    //logic to retrieve data from the database
+    const books = await getBooksByLibraryId(id);
+
+    // Sending the retrieved user data as JSON in the response
+    res.json({ books });
+  } catch (error) {
+    console.error('Error fetching books data:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
 
 // API endpoint to handle user insertion or retrieval based on sub_id
 app.get('/users/:sub_id', async (req, res) => {
