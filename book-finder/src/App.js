@@ -1,4 +1,4 @@
-import './App.css';
+import './App.scss';
 import Home from './components/Home';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 // import Login from './components/LoginPage';
@@ -14,7 +14,7 @@ import LibraryList from './components/LibraryList';
 function App() {
   return (
     <Router>
-       <nav>
+       <nav className="top-nav">
           <Link to="/">Home </Link>
           {/* <Link to="/login">Login </Link> */}
           <Link to="/about">About </Link>

@@ -68,6 +68,18 @@ const searchBooks = async (query) => {
     throw error;
   }
 };
+// New function for searching by author
+const searchByAuthor = async (query) => {
+  try {
+    const result = await db.query(
+      'SELECT books.*, authors.full_name as author_name FROM books JOIN authors ON books.author_id = authors.id WHERE LOWER(authors.full_name) LIKE LOWER($1) OR CAST(books.author_id as text) LIKE $1',
+      [`%${query}%`]
+    );
+    return result.rows;
+  } catch (error) {
+    throw error;
+  }
+};
 // const getBookById = async (id) => {
 //   try {
 //     const result = await db.query('SELECT * FROM books WHERE id = $1', [id]);
@@ -100,5 +112,6 @@ module.exports = {
   searchBooks,
   getBooks,
   addBook,
+  searchByAuthor,
   // getBookById,
 };
