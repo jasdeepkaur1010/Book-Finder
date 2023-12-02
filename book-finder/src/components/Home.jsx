@@ -60,7 +60,7 @@ const Home = ( {dummyBooks} ) => {
 
   return (
     <div className="content">
- // return (
+ {/* // return (
    // <div >
      // <div className="book-cards">
        // {searchResults.map((book) => (
@@ -70,7 +70,7 @@ const Home = ( {dummyBooks} ) => {
   
 
   //return (
-  //  <div >
+  //  <div > */}
       <Profile />
       <h1>Book Finder</h1>
       <div className="search-bar">
@@ -95,9 +95,9 @@ const Home = ( {dummyBooks} ) => {
       <div className="book-cards">
         {/* Display search results or top-rated books based on the context */}
         {(searchResults.length > 0 ? searchResults : topRatedBooks).map((book) => (
-          <BookCard key={book.id} title={book.title} author={book.author} cover_image_url={book.cover_image_url} imageUrl={book.cover_image_url} />
-          {/*  {dummyBooks.map((book) => (
-         <BookCard id={book.id} key={book.id} title={book.title} author={book.author_id} imageUrl={book.cover_image_url} /> */}
+          <BookCard key={book.id} id={book.id} title={book.title} author={book.author} cover_image_url={book.cover_image_url} imageUrl={book.cover_image_url} />
+        //   {/*  {dummyBooks.map((book) => (
+        //  <BookCard id={book.id} key={book.id} title={book.title} author={book.author_id} imageUrl={book.cover_image_url} /> */}
         ))}
       </div>
     </div>

@@ -12,6 +12,7 @@ const SingleBookPage = ({ dummyBooks }) => {
   const id = location.pathname.split('/')[2];
   const dummyBook = dummyBooks[id - 1];
   // console.log(dummyBook, 'dummybooks');
+  console.log(location, 'dummybooks');
   // console.log(id, 'dummybook');
 
   const [bookRatings, setBookRatings] = useState([]);

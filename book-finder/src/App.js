@@ -17,34 +17,43 @@ import { useEffect, useState } from 'react';
 import LibraryList from './components/LibraryList';
 
 function App() {
-  const dummyBooks = [
-    { id: 1, title: 'Book 1', author: 'Author 1', imageUrl: 'https://m.media-amazon.com/images/I/81Fyh2mrw4L._SY466_.jpg' },
-    { id: 2, title: 'Book 1', author: 'Author 1', imageUrl: 'https://m.media-amazon.com/images/I/81Fyh2mrw4L._SY466_.jpg' },
-    { id: 3, title: 'Book 1', author: 'Author 1', imageUrl: 'https://m.media-amazon.com/images/I/81Fyh2mrw4L._SY466_.jpg' },
-    { id: 4, title: 'Book 1', author: 'Author 1', imageUrl: 'https://m.media-amazon.com/images/I/81Fyh2mrw4L._SY466_.jpg' },
-    { id: 5, title: 'Book 1', author: 'Author 1', imageUrl: 'https://m.media-amazon.com/images/I/81Fyh2mrw4L._SY466_.jpg' },
-    { id: 6, title: 'Book 2', author: 'Author 2', imageUrl: 'https://m.media-amazon.com/images/I/41SKsBaGXRL._SY445_SX342_.jpg' },
-    { id: 7, title: 'Book 2', author: 'Author 2', imageUrl: 'https://m.media-amazon.com/images/I/41SKsBaGXRL._SY445_SX342_.jpg' },
-    { id: 8, title: 'Book 2', author: 'Author 2', imageUrl: 'https://m.media-amazon.com/images/I/41SKsBaGXRL._SY445_SX342_.jpg' },
-  ];
   const [books, setBooks] = useState([]);
 
-  useEffect(() => {
-    // Fetch data from the backend API
-    const fetchData = async () => {
-      try {
-        const response = await axios.get('http://localhost:8080/books');
-        console.log(response.data, 'ress');
-        setBooks(response.data.users); // Assuming the response data is an array of books
-      } catch (error) {
-        console.error('Error fetching data:', error.message);
+  // useEffect(() => {
+  //   // Fetch data from the backend API
+  //   const fetchData = async () => {
+  //     try {
+  //       const response = await axios.get('http://localhost:8080/books');
+  //       console.log(response.data, 'ress');
+  //       setBooks(response.data.users); // Assuming the response data is an array of books
+  //     } catch (error) {
+  //       console.error('Error fetching data:', error.message);
+  //     }
+  //   };
+  //   console.log(books, 'books');
+  //   fetchData();
+  // }, []); 
+
+  const fetchTopRatedBooks = async () => {
+    try {
+      const response = await axios.get('http://localhost:8080/books/top-rated');
+
+      if (response.status === 200) {
+        // console.log(response.data, 'topratedbooks');
+        setBooks(response.data.topRatedBooks);
+      } else {
+        throw new Error('Failed to fetch top-rated books');
       }
-    };
-    console.log(books, 'books');
-    fetchData();
-  }, []); 
+    } catch (error) {
+      console.error('Error fetching top-rated books:', error);
+    }
+  };
 
-
+  useEffect(() => {
+    // Fetch top-rated books on component mount
+    fetchTopRatedBooks();
+  }, []);
+// console.log(books, 'books');
   return (
     <Router>
        <nav className="top-nav">
@@ -55,7 +64,6 @@ function App() {
           <Link to="/loginbutton">LoginButton </Link>
           <Link to="/logoutbutton">Logout </Link>
           {/* <Link to="/BookForm">AddBook</Link> */}
-          <Link to="/LibraryForm">LibraryForm</Link>
           <Link to="/LibraryList">LibraryList</Link>
         </nav>
       <div>
@@ -71,7 +79,7 @@ function App() {
           <Route path="/logoutbutton" element={<LogoutButton />} />
           <Route path="/BookForm" element={<AddBook />} />
           <Route path="/LibraryForm" element={<LibraryForm />} />
-          <Route path="/book/:id" element={<SingleBookPage dummyBooks={books} />} />
+          <Route path="/books/:id" element={<SingleBookPage dummyBooks={books} />} />
           <Route path="/LibraryList" element={<LibraryList/>} />
         </Routes>
       </div>
