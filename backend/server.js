@@ -121,19 +121,6 @@ app.get('/books', async (req, res) => {
   }
 });
 
-//Add a new function to search books by author
-// const searchByAuthor = async (author) => {
-//   try {
-//     const result = await db.query(
-//       'SELECT books.*, authors.full_name AS author_name FROM books JOIN authors ON books.author_id = authors.id WHERE authors.full_name ILIKE $1',
-//       [`%${author}%`]
-//     );
-//     return result.rows;
-//   } catch (error) {
-//     throw error;
-//   }
-// };
-
 //Addbook route
 app.post('/books', async (req, res) => {
   try {
