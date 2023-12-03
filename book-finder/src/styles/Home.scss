@@ -1,89 +1,73 @@
-.homepage {
+// Home.scss
+
+.content {
+
+
+  .search-section{
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: center; /* Center items horizontally */
   justify-content: center;
-  height: 100vh;
-  background-size: cover;
-  background-position: center;
-  color: rgb(0, 0, 0)929; // Set text color to white or a color that contrasts well with the background
-}
-
-h1 {
-  font-size: 2em;
+  background-image: url(https://img.freepik.com/free-photo/abstract-blur-defocused-library-book-store-shop-interior_1203-9330.jpg?w=1380&t=st=1701646947~exp=1701647547~hmac=6fa6da45dcfdab2033c751c6ef27444ca0f5cc14f7c938c0860cc4ef1d16f177);
+  background-size: cover; // Ensures that the background image covers the entire container
+  background-repeat: no-repeat;
+  height: 500px;
   margin-bottom: 20px;
-}
+  
+  h1 {
+    font-size: 5rem;
+    color: #003566; 
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
 
-.search-bar {
-  margin: 20px 0;
-}
+  input {
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-right: 10px;
+    width: 30%;
+  }
 
-input {
-  padding: 10px;
-  font-size: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  margin-right: 10px;
-}
+  button {
+    padding: 10px 15px;
+    font-size: 1rem;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
 
-button {
-  padding: 10px 20px;
-  font-size: 1rem;
-  background-color: #007BFF;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
+    &:hover {
+      background-color: #0056b3;
+    }
+  }
 }
-
-.background-image {
-  width: 100%;
-  height: auto;
-}
-
-a {
-  top: 50%;
-  left: 50%;
-  transform: translate(200%, 80%);
-  background-color: rgba(255, 255, 255, 0.7);
-  padding: 10px;
-  border-radius: 5px;
-  cursor: pointer;
-  text-decoration: none;
-  color: #333;
-}
-
 .book-cards {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
 
   .book-card {
+    width: 200px;
     margin: 10px;
-    padding: 15px;
-    background-color: rgba(255, 255, 255, 0.7);
-    border-radius: 5px;
-    width: 200px; // Adjust width as needed
-    text-align: center;
 
     img {
       max-width: 100%;
       height: auto;
-      border-radius: 3px;
-      margin-bottom: 10px;
+      border-radius: 5px;
     }
 
     h3 {
-      font-size: 1.2em;
-      margin-bottom: 5px;
+      font-size: 1.2rem;
+      margin: 10px 0;
     }
 
     p {
-      font-size: 1em;
-      margin: 0;
+      font-size: 1rem;
+      color: #555;
     }
   }
 }
-
-// Add any additional styling as needed
+}
 
