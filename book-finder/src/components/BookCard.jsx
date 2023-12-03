@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import SingleBookPage from './SingleBookPage';
 
-const BookCard = ({ id, title, author, imageUrl }) => {
+const BookCard = ({ id, title, author, imageUrl, status }) => {
   
   const [showDetails, setShowDetails] = useState(false);
   const navigate = useNavigate();
@@ -23,6 +23,7 @@ const BookCard = ({ id, title, author, imageUrl }) => {
     // <img src={cover_image_url} alt={title} className="book-image" /> */}
       <h3>{title}</h3>
       <p>{author}</p>
+      <p>{status}</p>
     </div>
   );
 };
