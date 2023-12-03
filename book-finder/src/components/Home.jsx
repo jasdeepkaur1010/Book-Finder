@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import BookCard from './BookCard';
-import "../styles/Home.scss";
+import "../styles2/Home.scss";
 import Profile from './Profile';
 import axios from 'axios';
 

@@ -35,22 +35,31 @@ const BookStatus = ({ book, libraryId }) => {
 
     }
   };
-
+  const statusOptions = ['Available', 'Rented', 'sold'];
   return (
     <div>
-      {/* <p>Status: {book.status}</p> */}
       {isAdmin && (
-        <div>
-          <input
-            type="text"
-            value={status}
-            onChange={(e) => setStatus(e.target.value)}
-          />
-          <button onClick={updateBookStatus}>Update Status</button>
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+          <select value={status} onChange={(e) => setStatus(e.target.value)}
+            style={{ marginRight: '5px', height: '30px' }}
+          >
+            {statusOptions.map((option) => (
+              <option key={option} value={option}>
+                {option}
+              </option>
+            ))}
+          </select>
+          <button onClick={updateBookStatus}
+            style={{ height: '30px', fontSize: '14px' }}
+          >
+            Update Status
+          </button>
         </div>
       )}
     </div>
   );
 };
+
+
 
 export default BookStatus;
