@@ -71,11 +71,12 @@ const searchBooks = async (query) => {
 const searchByAuthor = async (query) => {
   try {
     const result = await db.query(
-      'SELECT books.*, authors.full_name as author_name FROM books JOIN authors ON books.author_id = authors.id WHERE LOWER(authors.full_name) LIKE LOWER($1) OR CAST(books.author_id as text) LIKE $1',
+      'SELECT * FROM books WHERE LOWER(author_id) LIKE LOWER($1)',
       [`%${query}%`]
     );
     return result.rows;
   } catch (error) {
+    console.error('Error in searchByAuthor:', error);
     throw error;
   }
 };

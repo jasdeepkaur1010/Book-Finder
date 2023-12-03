@@ -4,9 +4,9 @@ import "../styles/Home.scss";
 import Profile from './Profile';
 import axios from 'axios';
 
-const Home = ( {dummyBooks} ) => {
-
+const Home = ({ dummyBooks }) => {
   const [searchTerm, setSearchTerm] = useState('');
+  const [authorSearchTerm, setAuthorSearchTerm] = useState('');
   const [searchResults, setSearchResults] = useState([]);
   const [topRatedBooks, setTopRatedBooks] = useState([]);
 
@@ -24,10 +24,10 @@ const Home = ( {dummyBooks} ) => {
     }
   };
 
-  const searchByAuthor = async (author) => {
+  const searchByAuthor = async () => {
     try {
-      const response = await axios.get(`http://localhost:8080/books?author=${author}`);
-  
+      const response = await axios.get(`http://localhost:8080/books?author=${authorSearchTerm}`);
+
       if (response.status === 200) {
         setSearchResults(response.data);
       } else {
@@ -37,7 +37,6 @@ const Home = ( {dummyBooks} ) => {
       console.error('Error during search by author:', error.message);
     }
   };
-  
 
   const fetchTopRatedBooks = async () => {
     try {
@@ -76,17 +75,16 @@ const Home = ( {dummyBooks} ) => {
         <input
           type="text"
           placeholder="Search by author..."
-          onChange={(e) => searchByAuthor(e.target.value)}
+          value={authorSearchTerm}
+          onChange={(e) => setAuthorSearchTerm(e.target.value)}
         />
-        <button onClick={handleSearch}>Search</button>
+        <button onClick={searchByAuthor}>Search</button>
       </div>
 
       <div className="book-cards">
         {/* Display search results or top-rated books based on the context */}
         {(searchResults.length > 0 ? searchResults : topRatedBooks).map((book) => (
           <BookCard key={book.id} id={book.id} title={book.title} author={book.author} cover_image_url={book.cover_image_url} imageUrl={book.cover_image_url} />
-        //   {/*  {dummyBooks.map((book) => (
-        //  <BookCard id={book.id} key={book.id} title={book.title} author={book.author_id} imageUrl={book.cover_image_url} /> */}
         ))}
       </div>
     </div>

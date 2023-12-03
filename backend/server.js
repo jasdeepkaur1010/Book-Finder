@@ -2,7 +2,7 @@
 require('dotenv').config();
 const path = require('path');
 const db = require('./db/connection');
-const { getBooks, addBook, searchBooks, getBookReviews, getBookById, updateBookStatus } = require('./db/queries/books');
+const { getBooks, addBook, searchBooks, getBookReviews, getBookById, updateBookStatus, searchByAuthor } = require('./db/queries/books');
 const { getUsers, getUserBySubId, insertUser,  updateUserIsAdmin, getUserDetailsById } = require('./db/queries/users');
 const { insertLibrary, getLibrary, getLibraryById, getBooksByLibraryId } = require('./db/queries/libraries');
 
@@ -108,7 +108,7 @@ app.get('/books', async (req, res) => {
     let result;
     if (author) {
       // Search by author
-      result = await searchBooksByAuthor(author);
+      result = await searchByAuthor(author);
     } else {
       // Default search by title, genre, or ISBN
       result = await searchBooks(query);
@@ -121,44 +121,18 @@ app.get('/books', async (req, res) => {
   }
 });
 
-// Add a new function to search books by author
-const searchBooksByAuthor = async (author) => {
-  try {
-    const result = await db.query(
-      'SELECT books.*, authors.full_name AS author_name FROM books JOIN authors ON books.author_id = authors.id WHERE authors.full_name ILIKE $1',
-      [`%${author}%`]
-    );
-    return result.rows;
-  } catch (error) {
-    throw error;
-  }
-};
-
-
-app.get('/books', async (req, res) => {
-  try {
-    //retrieve data from the database
-    const bookData = await getBooks();
-
-    // Sending the retrieved user data as JSON in the response
-    res.json({ users: bookData });
-  } catch (error) {
-    console.error('Error fetching book data:', error);
-    res.status(500).json({ error: 'Internal server error' });
-  }
-});
-
-app.get('/books/searchByAuthor', async (req, res) => {
-  try {
-    const { author } = req.query;
-    const result = await searchByAuthor(author);
-
-    res.status(200).json(result);
-  } catch (error) {
-    console.error('Error during search by author:', error);
-    res.status(500).json({ error: 'Failed to fetch search results' });
-  }
-});
+//Add a new function to search books by author
+// const searchByAuthor = async (author) => {
+//   try {
+//     const result = await db.query(
+//       'SELECT books.*, authors.full_name AS author_name FROM books JOIN authors ON books.author_id = authors.id WHERE authors.full_name ILIKE $1',
+//       [`%${author}%`]
+//     );
+//     return result.rows;
+//   } catch (error) {
+//     throw error;
+//   }
+// };
 
 //Addbook route
 app.post('/books', async (req, res) => {
