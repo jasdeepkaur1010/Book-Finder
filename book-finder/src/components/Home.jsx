@@ -60,17 +60,6 @@ const Home = ( {dummyBooks} ) => {
 
   return (
     <div className="content">
- {/* // return (
-   // <div >
-     // <div className="book-cards">
-       // {searchResults.map((book) => (
-         // <BookCard key={book.id} title={book.title} author={book.author} imageUrl={book.imageUrl} />
-        //))}
-     // </div>
-  
-
-  //return (
-  //  <div > */}
       <Profile />
       <h1>Book Finder</h1>
       <div className="search-bar">
