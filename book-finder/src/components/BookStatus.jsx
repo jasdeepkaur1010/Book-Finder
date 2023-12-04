@@ -39,9 +39,10 @@ const BookStatus = ({ book, libraryId }) => {
   return (
     <div>
       {isAdmin && (
-        <div style={{ display: 'flex', alignItems: 'center' }}>
+        <div style={{ display: 'flex', alignItems: 'center',justifyContent: 'center', flexDirection: 'column', textAlign: 'center' }}>
+           <div style={{ display: 'flex', marginBottom: '5px' }}>
           <select value={status} onChange={(e) => setStatus(e.target.value)}
-            style={{ marginRight: '5px', height: '30px' }}
+            style={{ width: '100px', marginRight: '5px', height: '30px' }}
           >
             {statusOptions.map((option) => (
               <option key={option} value={option}>
@@ -50,10 +51,11 @@ const BookStatus = ({ book, libraryId }) => {
             ))}
           </select>
           <button onClick={updateBookStatus}
-            style={{ height: '30px', fontSize: '14px' }}
+            style={{ width: '120px', height: '30px', fontSize: '14px' }}
           >
             Update Status
           </button>
+        </div>
         </div>
       )}
     </div>
