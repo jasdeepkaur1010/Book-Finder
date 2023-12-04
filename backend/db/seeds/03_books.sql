@@ -29,4 +29,3 @@ INSERT INTO books (title, author_id, publication_date, genre, isbn, cover_image_
   ('The Elements of Style', 'William Strunk Jr., E.B. White', '1918-01-01', 'Bibliography', '978-0205309023', 'https://m.media-amazon.com/images/I/81xutGqez0L._AC_UY218_.jpg', 'A classic guide on English language usage and composition.', 'Available', 4.8),
   ('The Chicago Manual of Style', 'University of Chicago Press Staff', '1906-01-01', 'Bibliography', '978-0226287058', 'https://m.media-amazon.com/images/I/61MavEvPFBL._AC_UY218_.jpg', 'A comprehensive guide to writing, editing, and publishing.', 'Checked Out', 4.7),
   ('APA Publication Manual', 'American Psychological Association', '1952-01-01', 'Bibliography', '978-1433832178', 'https://m.media-amazon.com/images/I/71lk10uajiL._AC_UY218_.jpg', 'The standard for writing in the social and behavioral sciences.', 'Checked Out', 4.5);
-
