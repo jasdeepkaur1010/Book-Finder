@@ -1,5 +1,3 @@
-/* Global styles */
-
 .top-nav {
   // background-color: #f7cc9e;
   padding: 20px;
@@ -22,34 +20,11 @@
   }
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-/* Navigation styles */
-
-// .top-nav {
-//   position: fixed;
-//   top: 0;
-//   left: 0;
-//   width: 100%;
-//   background-color: #215f99;
-//   padding: 30px;
-//   z-index: 1000;
-//   margin-bottom: 150px;
-// }
-
-// .top-nav a {
-//   text-decoration: none;
-//   color: white;
-//   margin-right: 15px;
-// }
-
-// .top-nav a:hover {
-//   text-decoration: underline;
+// @keyframes App-logo-spin {
+//   from {
+//     transform: rotate(0deg);
+//   }
+//   to {
+//     transform: rotate(360deg);
+//   }
 // }
