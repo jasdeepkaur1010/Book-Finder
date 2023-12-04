@@ -63,23 +63,27 @@ const Home = ({ dummyBooks }) => {
     <div className="search-section">
       {/* search books  */}
       <h1>Library Hub</h1>
-      
+      <div className="search-general">
         <input
           type="text"
           placeholder="Search for books..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
+        <button onClick={handleSearch}>Search</button>
+      </div>
         
+
       {/* search by author  */}
+       <div className="search-author">
         <input
           type="text"
           placeholder="Search by author..."
           value={authorSearchTerm}
           onChange={(e) => setAuthorSearchTerm(e.target.value)}
         />
-        <p></p>
         <button onClick={searchByAuthor}>Search</button>
+        </div>
       </div>
 
       <div className="book-cards">
