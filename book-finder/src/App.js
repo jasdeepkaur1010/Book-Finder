@@ -61,10 +61,11 @@ console.log(books, 'books');
           {/* <Link to="/login">Login </Link> */}
           <Link to="/about">About </Link>
           <Link to="/contact">ContactUs</Link>
-          <Link to="/loginbutton">LoginButton </Link>
-          <Link to="/logoutbutton">Logout </Link>
-          {/* <Link to="/BookForm">AddBook</Link> */}
           <Link to="/LibraryList">LibraryList</Link>
+          <Link to="/loginbutton">Login</Link>
+          {/* <Link to="/logoutbutton">Logout</Link> */}
+          {/* <Link to="/BookForm">AddBook</Link> */}
+          
         </nav>
       <div>
        

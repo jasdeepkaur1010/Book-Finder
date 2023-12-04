@@ -66,7 +66,7 @@ const Home = ({ dummyBooks }) => {
       <div className="search-general">
         <input
           type="text"
-          placeholder="Search for books..."
+          placeholder="Search for books by title, subject or ISBN."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
