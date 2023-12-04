@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import BookCard from './BookCard';
-import "../styles/Home.scss";
+import "../styles2/Home.scss";
 import Profile from './Profile';
 import axios from 'axios';
 import LoginButton from './LoginButton';
@@ -106,8 +106,11 @@ const Home = ({ dummyBooks }) => {
         {/* Display search results or top-rated books based on the context */}
         {(searchResults.length > 0 ? searchResults : topRatedBooks).map((book) => (
           <BookCard key={book.id} id={book.id} title={book.title} author={book.author} status={book.status} cover_image_url={book.cover_image_url} imageUrl={book.cover_image_url} />
+        //   {/*  {dummyBooks.map((book) => (
+        //  <BookCard id={book.id} key={book.id} title={book.title} author={book.author_id} imageUrl={book.cover_image_url} /> */}
         ))}
       </div>
+    </div>
     </div>
   );
 };

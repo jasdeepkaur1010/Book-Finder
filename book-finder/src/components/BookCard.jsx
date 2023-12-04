@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import SingleBookPage from './SingleBookPage';
 
-const BookCard = ({ id, title, author, imageUrl, status}) => {
+const BookCard = ({ id, title, author, imageUrl, status }) => {
   
   const [showDetails, setShowDetails] = useState(false);
   const navigate = useNavigate();

@@ -27,26 +27,46 @@
   font-size: 28px;
   font-weight: bold;
   cursor: pointer;
-  color: rgb(0, 106, 255);
+  color:  #003566;
+}
+ .library-container {
+  display: flex; 
+  justify-content: center;
+  // background-image: url(https://img.freepik.com/free-photo/abstract-blur-defocused-library-book-store-shop-interior_1203-9330.jpg?w=1380&t=st=1701646947~exp=1701647547~hmac=6fa6da45dcfdab2033c751c6ef27444ca0f5cc14f7c938c0860cc4ef1d16f177);
+  background-size: top;
+  background-position: center;
+  text-align: center;
+  flex-wrap: wrap;
+  gap: 20px;
+  color: #003566;
+ }
+ h1 {
+  color: #003566;
+  text-align: center;
 }
 
+.library-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
 
-//Librarylist styles//
-// button {
-//   border: none;
-//   background: none;
-//   padding: 0;
-//   margin: 0;
-// }
+}
+.library-item {
+  margin: 10px;
+    padding: 50px;
+    background-color: rgba(255, 255, 255, 0.7);
+    border-radius: 5px;
+    width: 200px; 
+}
+
 
 /* Style for the book form container */
 .library-form {
   margin: auto; /* Center the form horizontally */
-  width: 50%; /* Adjust the width as needed */
+  width: 50%; 
   padding: 40px;
   border: 1px solid #ccc;
   border-radius: 5px;
-  /* Additional styles for aesthetics */
   background-color: #f9f9f9;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 }
@@ -78,5 +98,4 @@
   border: none;
   border-radius: 3px;
   cursor: pointer;
-  /* Add other styles like hover effects, margin, etc. */
 }
