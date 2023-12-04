@@ -74,7 +74,7 @@ const Home = ({ dummyBooks }) => {
   <LoginButton />
       <Profile />
       <h1>Book Finder</h1>
-      <div className="search-bar">
+      {/* <div className="search-bar"> */}
     
     <div className="search-section">
       {/* search books  */}

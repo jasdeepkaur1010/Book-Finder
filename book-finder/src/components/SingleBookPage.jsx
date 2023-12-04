@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import axios from 'axios';
+import "../Styles/SingleBookPage.scss";
 
 const SingleBookPage = ({ dummyBooks }) => {
   const [rating, setRating] = useState(0);
@@ -84,14 +85,14 @@ const SingleBookPage = ({ dummyBooks }) => {
   };
 
   return (
-    <div>
+    <div className="container">
       <img src={dummyBook.cover_image_url} alt={dummyBook.title} />
       <h2>{dummyBook.title}</h2>
       <p>Author: {dummyBook.author_id}</p>
       <p>Publication Date: {dummyBook.publication_date}</p>
       <p>Genre: {dummyBook.genre}</p>
       <p>ISBN: {dummyBook.isbn}</p>
-      <p>Summary: {dummyBook.summary}</p>
+      <p className='summary'>Summary: {dummyBook.summary}</p>
 
       {/* Conditionally render based on user login */}
       {storedUserId ? (
@@ -120,7 +121,7 @@ const SingleBookPage = ({ dummyBooks }) => {
           <button onClick={handleSave}>Save</button>
         </>
       ) : (
-        <p>To add reviews, please <a href="/loginbutton">Login Here</a></p>
+        <p>To add reviews, please <a href="/login">Login Here</a></p>
       )}
 
       {/* Display ratings and comments if available */}
