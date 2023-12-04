@@ -3,6 +3,7 @@ import BookCard from './BookCard';
 import "../styles/Home.scss";
 import Profile from './Profile';
 import axios from 'axios';
+import LoginButton from './LoginButton';
 
 const Home = ({ dummyBooks }) => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -59,6 +60,21 @@ const Home = ({ dummyBooks }) => {
 
   return (
     <div className="content">
+ {/* // return (
+   // <div >
+     // <div className="book-cards">
+       // {searchResults.map((book) => (
+         // <BookCard key={book.id} title={book.title} author={book.author} imageUrl={book.imageUrl} />
+        //))}
+     // </div>
+  
+
+  //return (
+  //  <div > */}
+  <LoginButton />
+      <Profile />
+      <h1>Book Finder</h1>
+      <div className="search-bar">
     
     <div className="search-section">
       {/* search books  */}
