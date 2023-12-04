@@ -65,6 +65,10 @@ console.log(books, 'books');
           {/* <Link to="/logoutbutton">Logout </Link> */}
           {/* <Link to="/BookForm">AddBook</Link> */}
           <Link to="/LibraryList">LibraryList</Link>
+          <Link to="/loginbutton">Login</Link>
+          {/* <Link to="/logoutbutton">Logout</Link> */}
+          {/* <Link to="/BookForm">AddBook</Link> */}
+          
         </nav>
       <div>
        

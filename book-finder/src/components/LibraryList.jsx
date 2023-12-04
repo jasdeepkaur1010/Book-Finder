@@ -56,9 +56,9 @@ function LibraryList() {
   };
 
   return (
-    <div>
+    <div className="library">
       <h1>Library List</h1>
-      <div>
+      {/* <div>
         <input
           type="text"
           placeholder="Search libraries..."
@@ -66,7 +66,7 @@ function LibraryList() {
           onChange={(e) => setSearchTerm(e.target.value)}
         />
         <button onClick={handleSearch}>Search</button>
-      </div>
+      </div> */}
       <ul>
 
         {libraries.map(library => (
