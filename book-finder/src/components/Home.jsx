@@ -3,6 +3,7 @@ import BookCard from './BookCard';
 import "../styles/Home.scss";
 import Profile from './Profile';
 import axios from 'axios';
+import LoginButton from './LoginButton';
 
 const Home = ( {dummyBooks} ) => {
 
@@ -71,6 +72,7 @@ const Home = ( {dummyBooks} ) => {
 
   //return (
   //  <div > */}
+  <LoginButton />
       <Profile />
       <h1>Book Finder</h1>
       <div className="search-bar">
