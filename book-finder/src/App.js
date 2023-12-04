@@ -61,10 +61,14 @@ console.log(books, 'books');
           {/* <Link to="/login">Login </Link> */}
           <Link to="/about">About </Link>
           <Link to="/contact">ContactUs</Link>
-          <Link to="/loginbutton">LoginButton </Link>
-          <Link to="/logoutbutton">Logout </Link>
+          <Link to="/login">Login/Logout </Link>
+          {/* <Link to="/logoutbutton">Logout </Link> */}
           {/* <Link to="/BookForm">AddBook</Link> */}
           <Link to="/LibraryList">LibraryList</Link>
+          <Link to="/loginbutton">Login</Link>
+          {/* <Link to="/logoutbutton">Logout</Link> */}
+          {/* <Link to="/BookForm">AddBook</Link> */}
+          
         </nav>
       <div>
        
@@ -75,7 +79,7 @@ console.log(books, 'books');
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
           {/* <Route path="/register" element={<Register />} /> */}
-          <Route path="/loginbutton" element={<LoginButton />} />
+          <Route path="/login" element={<LoginButton />} />
           <Route path="/logoutbutton" element={<LogoutButton />} />
           <Route path="/BookForm" element={<AddBook />} />
           <Route path="/LibraryForm" element={<LibraryForm />} />

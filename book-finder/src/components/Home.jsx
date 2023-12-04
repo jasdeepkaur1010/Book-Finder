@@ -3,10 +3,11 @@ import BookCard from './BookCard';
 import "../styles2/Home.scss";
 import Profile from './Profile';
 import axios from 'axios';
+import LoginButton from './LoginButton';
 
-const Home = ( {dummyBooks} ) => {
-
+const Home = ({ dummyBooks }) => {
   const [searchTerm, setSearchTerm] = useState('');
+  const [authorSearchTerm, setAuthorSearchTerm] = useState('');
   const [searchResults, setSearchResults] = useState([]);
   const [topRatedBooks, setTopRatedBooks] = useState([]);
 
@@ -24,10 +25,10 @@ const Home = ( {dummyBooks} ) => {
     }
   };
 
-  const searchByAuthor = async (author) => {
+  const searchByAuthor = async () => {
     try {
-      const response = await axios.get(`http://localhost:8080/books?author=${author}`);
-  
+      const response = await axios.get(`http://localhost:8080/books?author=${authorSearchTerm}`);
+
       if (response.status === 200) {
         setSearchResults(response.data);
       } else {
@@ -37,7 +38,6 @@ const Home = ( {dummyBooks} ) => {
       console.error('Error during search by author:', error.message);
     }
   };
-  
 
   const fetchTopRatedBooks = async () => {
     try {
@@ -71,25 +71,35 @@ const Home = ( {dummyBooks} ) => {
 
   //return (
   //  <div > */}
+  <LoginButton />
       <Profile />
       <h1>Book Finder</h1>
       <div className="search-bar">
+    
+    <div className="search-section">
+      {/* search books  */}
+      <h1>Library Hub</h1>
+      <div className="search-general">
         <input
           type="text"
-          placeholder="Search for books..."
+          placeholder="Search for books by title, subject or ISBN."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
         <button onClick={handleSearch}>Search</button>
       </div>
+        
 
-      <div className="search-by-author">
+      {/* search by author  */}
+       <div className="search-author">
         <input
           type="text"
           placeholder="Search by author..."
-          onChange={(e) => searchByAuthor(e.target.value)}
+          value={authorSearchTerm}
+          onChange={(e) => setAuthorSearchTerm(e.target.value)}
         />
-        <button onClick={handleSearch}>Search</button>
+        <button onClick={searchByAuthor}>Search</button>
+        </div>
       </div>
 
       <div className="book-cards">
@@ -100,6 +110,7 @@ const Home = ( {dummyBooks} ) => {
         //  <BookCard id={book.id} key={book.id} title={book.title} author={book.author_id} imageUrl={book.cover_image_url} /> */}
         ))}
       </div>
+    </div>
     </div>
   );
 };

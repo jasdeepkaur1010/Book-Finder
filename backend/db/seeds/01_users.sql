@@ -23,4 +23,3 @@ INSERT INTO users (username, sub_id, email, isadministrator) VALUES
     ('young23', 60606, 'young23@example.com', false),
     ('gonzalez24', 70707, 'gonzalez24@example.com', true),
     ('evans25', 80808, 'evans25@example.com', false);
-

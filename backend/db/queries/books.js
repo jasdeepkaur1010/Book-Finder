@@ -37,24 +37,6 @@ const addBook = (book) => {
       throw new Error(err.message);
     });
 };
-// module.exports = { getBooks, addBook };
-// const db = require('../connection');
-
-// // Set up the PostgreSQL connection pool
-// const pool = new Pool();
-
-// Query to search for books
-// const searchBooks = async (query) => {
-//   try {
-//     const result = await pool.query(
-//       'SELECT * FROM books WHERE title ILIKE $1 OR genre ILIKE $1 OR isbn ILIKE $1',
-//       [`%${query}%`]
-//     );
-//     return result.rows;
-//   } catch (error) {
-//     throw error;
-//   }
-// };
 
 const searchBooks = async (query) => {
   try {
@@ -71,11 +53,12 @@ const searchBooks = async (query) => {
 const searchByAuthor = async (query) => {
   try {
     const result = await db.query(
-      'SELECT books.*, authors.full_name as author_name FROM books JOIN authors ON books.author_id = authors.id WHERE LOWER(authors.full_name) LIKE LOWER($1) OR CAST(books.author_id as text) LIKE $1',
+      'SELECT * FROM books WHERE LOWER(author_id) LIKE LOWER($1)',
       [`%${query}%`]
     );
     return result.rows;
   } catch (error) {
+    console.error('Error in searchByAuthor:', error);
     throw error;
   }
 };
@@ -99,25 +82,6 @@ const getBookReviews = async (bookId) => {
     throw error;
   }
 };
-
-// // Query to get all books
-// const getAllBooks = async () => {
-//   try {
-//     const result = await pool.query('SELECT * FROM books');
-//     return result.rows;
-//   } catch (error) {
-//     throw error;
-//   }
-// };
-
-// // Query to get a specific book by ID
-// const getBookById = async (id) => {
-//   try {
-//     const result = await pool.query('SELECT * FROM books WHERE id = $1', [id]);
-//     return result.rows[0];
-//   } catch (error) {
-//     throw error;
-//   }
 
 // Function to update book status in the database
 const updateBookStatus = async (libraryID, bookID, status) => {
