@@ -10,11 +10,12 @@ const SingleBookPage = ({ dummyBooks }) => {
   const location = useLocation();
   // console.log(location, 'location');
   const id = location.pathname.split('/')[2];
-  const dummyBook = dummyBooks[id - 1];
-  console.log(dummyBook, 'dummybooks');
+  // const dummyBook = dummyBooks[id - 1];
+  const dummyBook = dummyBooks.find(item => item.id == id);
+  console.log(dummyBooks, 'dummybooks');
   console.log(location, 'location');
-  // console.log(id, 'dummybook');
-
+  console.log(dummyBook, 'dummybook');
+  // console.log(foundObject, 'object');
   const [bookRatings, setBookRatings] = useState([]);
 
   // const [userId, setUserId] = useState(null); // Add userId state
