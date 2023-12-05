@@ -12,7 +12,7 @@
 import React from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 // import "../styles/Login.scss";
-import "../Styles/Login.scss";
+import "../styles/Login.scss";
 
 const LoginButton = () => {
   const { loginWithRedirect, logout, isAuthenticated } = useAuth0();

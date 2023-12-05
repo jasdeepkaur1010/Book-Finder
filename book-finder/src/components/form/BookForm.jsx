@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import  axios  from 'axios';
-import  '../../styles2/BookForm.scss';
+import  '../../styles/BookForm.scss';
 
 const BookForm = ({ handleSubmit}) => {
   const [book, setBook] = useState({

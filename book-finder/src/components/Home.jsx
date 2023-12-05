@@ -73,7 +73,7 @@ const Home = ({ dummyBooks }) => {
   //  <div > */}
   <LoginButton />
       <Profile />
-      <h1>Book Finder</h1>
+      {/* <h1>Book Finder</h1> */}
       <div className="search-bar">
     
     <div className="search-section">
