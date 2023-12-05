@@ -1,0 +1,58 @@
+.profile-icon {
+  width: 50px; /* Adjust the size as needed */
+  height: 50px; /* Adjust the size as needed */
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.profile-details {
+  display: none; /* Initially hide details */
+  text-align: right;
+}
+
+.profile-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.profile-image {
+  width: 50px; /* Adjust the size as needed */
+  height: 50px; /* Adjust the size as needed */
+  border-radius: 50%;
+  margin-bottom: 10px;
+}
+
+.admin-section {
+  margin-top: 20px;
+}
+
+.admin-link {
+  color: #007bff;
+  text-decoration: none;
+  margin-right: 20px;
+  font-weight: bold;
+}
+
+.admin-link:hover {
+  text-decoration: underline;
+}
+
+.admin-button {
+  padding: 10px 15px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.admin-button:hover {
+  background-color: #0056b3;
+}
+
+.show-details .profile-details {
+  display: block; /* Display details when .show-details class is applied */
+}

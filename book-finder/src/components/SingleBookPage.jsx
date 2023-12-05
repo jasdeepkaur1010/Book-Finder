@@ -2,35 +2,22 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import axios from 'axios';
-import "../Styles/SingleBookPage.scss";
+import "../styles/SingleBook.scss";
 
 const SingleBookPage = ({ dummyBooks }) => {
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState('');
   const [username, setUsername] = useState('');
   const location = useLocation();
-  // console.log(location, 'location');
   const id = location.pathname.split('/')[2];
-  // const dummyBook = dummyBooks[id - 1];
   const dummyBook = dummyBooks.find(item => item.id == id);
-  console.log(dummyBooks, 'dummybooks');
-  console.log(location, 'location');
-  console.log(dummyBook, 'dummybook');
-  // console.log(foundObject, 'object');
   const [bookRatings, setBookRatings] = useState([]);
 
-  // const [userId, setUserId] = useState(null); // Add userId state
 
   const storedUserId = sessionStorage.getItem('userId');
-  // useEffect(() => {
-  //   // Fetch user ID from the session or another relevant source
-  //   setUserId(storedUserId);
-  //   console.log(userId, 'userrr');
-  // }, []); 
   const fetchBookRatings = async () => {
     try {
       const response = await axios.get(`http://localhost:8080/book/${dummyBook.id}/review`);
-      // console.log('Book Ratings:', response.data);
       setBookRatings(response.data.reviews); // Set the fetched ratings in state
     } catch (error) {
       console.error('Error fetching book ratings:', error.message);
@@ -40,7 +27,6 @@ const SingleBookPage = ({ dummyBooks }) => {
   const fetchUsername = async () => {
     try {
       const response = await axios.get(`http://localhost:8080/user/${storedUserId}`);
-      // console.log(response.data, 'resdata');
       setUsername(response.data.user.username);
     } catch (error) {
       console.error('Error fetching username:', error.message);
@@ -63,7 +49,6 @@ const SingleBookPage = ({ dummyBooks }) => {
   };
 
   const handleSave = async () => {
-    // console.log(dummyBook.id);
     try {
       // Make a POST request to add the rating and comment
       await axios.post(`http://localhost:8080/book/${dummyBook.id}/review`, {
@@ -92,6 +77,7 @@ const SingleBookPage = ({ dummyBooks }) => {
       <p>Publication Date: {dummyBook.publication_date}</p>
       <p>Genre: {dummyBook.genre}</p>
       <p>ISBN: {dummyBook.isbn}</p>
+      <p>Status: {dummyBook.status}</p>
       <p className='summary'>Summary: {dummyBook.summary}</p>
 
       {/* Conditionally render based on user login */}
