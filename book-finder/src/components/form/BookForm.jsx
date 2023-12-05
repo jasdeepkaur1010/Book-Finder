@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import  axios  from 'axios';
-import  '../../styles/BookForm.scss';
+import  '../../Styles/BookForm.scss';
+// import { useHistory } from 'react-router-dom';
 
 const BookForm = ({ handleSubmit}) => {
   const [book, setBook] = useState({
@@ -36,7 +37,8 @@ const BookForm = ({ handleSubmit}) => {
     status: '',
     rating: '' 
   });
-    handleSubmit();
+    handleSubmit(book);
+   
   } catch (error) {
     console.error('Error adding book:', error);
   }

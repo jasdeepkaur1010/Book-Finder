@@ -9,6 +9,7 @@
   background-color: rgba(0, 0, 0, 0.5); 
   justify-content: center;
   align-items: center;
+  font-family: "Open Sans";
 }
 
 /* Style for the modal content */
@@ -20,7 +21,15 @@
   max-height: 80%;
   overflow-y: auto; 
 }
-
+.modal .modal-content .book {
+  border: 1px groove #ccc; /* Border between each book */
+  padding-bottom: 20px;
+  padding-top: 20px; /* Adjust padding as needed */
+  margin-bottom: 20px; /* Adjust margin as needed */
+}
+// .modal .modal-content .book:last-child {
+//   border-bottom: none; /* Remove border from the last book */
+// }
 /* Style for the close modal */
 .close {
   float: right;

@@ -5,6 +5,7 @@
 /.pnp
 .pnp.js
 src/styles3.scss
+src/styles2/Home.scss
 # testing
 /coverage
 
@@ -17,7 +18,7 @@ src/styles3.scss
 .env.development.local
 .env.test.local
 .env.production.local
-
+/Users/satya/lighthouse/final-project2/Book-Finder/book-finder/src/styles2/Home.scss
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
