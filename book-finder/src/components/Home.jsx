@@ -73,8 +73,6 @@ const Home = ({ dummyBooks }) => {
   //  <div > */}
   <LoginButton />
       <Profile />
-      {/* <h1>Book Finder</h1> */}
-      <div className="search-bar">
     
     <div className="search-section">
       {/* search books  */}
@@ -110,7 +108,6 @@ const Home = ({ dummyBooks }) => {
         //  <BookCard id={book.id} key={book.id} title={book.title} author={book.author_id} imageUrl={book.cover_image_url} /> */}
         ))}
       </div>
-    </div>
     </div>
   );
 };
