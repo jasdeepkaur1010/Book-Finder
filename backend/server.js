@@ -315,7 +315,7 @@ app.put('/libraries/:libraryID/books/:bookID', async (req, res) => {
     console.error(error);
     res.status(500).json({ message: 'Server error.' });
   }
-  });
+});
 
 
 app.get('/book/:id/review', async (req, res) => {
