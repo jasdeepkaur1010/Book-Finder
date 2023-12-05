@@ -66,7 +66,7 @@ const BookForm = ({ handleSubmit}) => {
        />
        </div>
        <div className="form-group">
-    <label htmlFor="author_id">Author ID</label>
+    <label htmlFor="author_id">Author</label>
         <input
         type="text"
         placeholder="AuthorID"

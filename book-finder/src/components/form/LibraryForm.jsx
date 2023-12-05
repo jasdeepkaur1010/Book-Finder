@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-// import LibraryList from '../LibraryList';
+
 const LibraryForm = () => {
   const [formData, setFormData] = useState({
     UserID: '',
@@ -52,112 +52,89 @@ const LibraryForm = () => {
   };
 
   return (
-    // <div>
-    // <h2>Add Library Information</h2>
-    // <form onSubmit={handleSubmit} className="book-form">
-    //   <label htmlFor="UserID">UserID:</label><br />
-    //   <input type="number" id="UserID" name="UserID" value={formData.UserID} onChange={handleChange} required /><br />
-
     <form onSubmit={handleSubmit} className="library-form">
-    <h2>Add a Library</h2>
-      {/* <div style={{ display: 'flex', flexDirection: 'column' }}> */}
+      <h2>Add a Library</h2>
       <div className="form-group">
-      <label htmlFor="UserID">UserID</label>
+        <label htmlFor="UserID">UserID</label>
         <input
-        type="text"
-        placeholder="UserID"
-        name="UserID"
-        value={formData.UserID}
-        onChange={handleChange}
-      />
+          type="text"
+          placeholder="UserID"
+          name="UserID"
+          value={formData.UserID}
+          onChange={handleChange}
+        />
       </div>
-   
-      {/* <label htmlFor="Name">Name:</label><br />
-      <input type="text" id="name" name="name" value={formData.name} onChange={handleChange} required /><br /> */}
 
-<div className="form-group">
-       <label htmlFor="name">Name</label>
-          <input
-       type="text"
-       placeholder="Name"
-       name="name"
-       value={formData.name}
-       onChange={handleChange}
-       />
-       </div>
-{/* 
-      <label htmlFor="Name">Cover Photo:</label><br />
-      <input type="text" id="cover_photo" name="cover_photo" value={formData.cover_photo} onChange={handleChange} required /><br /> */}
-
-<div className="form-group">
-       <label htmlFor="cover_photo">Cover photo</label>
-          <input
-       type="text"
-       placeholder="URL"
-       name="cover_photo"
-       value={formData.cover_photo}
-       onChange={handleChange}
-       />
-       </div>
-      {/* <label htmlFor="address">Address:</label><br />
-      <input type="text" id="address" name="address" value={formData.address} onChange={handleChange} maxLength={255} required /><br /> */}
-
-<div className="form-group">
-       <label htmlFor="address">Address</label>
-          <input
-       type="text"
-       placeholder="Address"
-       name="address"
-       value={formData.address}
-       onChange={handleChange}
-       />
-       </div>
-      {/* <label htmlFor="postal_code">Postal Code:</label><br />
-      <input type="text" id="postal_code" name="postal_code" value={formData.postal_code} onChange={handleChange} maxLength={20} required /><br /> */}
-
-<div className="form-group">
-       <label htmlFor="postal_code">Postal Code</label>
-          <input
-       type="text"
-       placeholder="Postal Code"
-       name="postal_code"
-       value={formData.postal_code}
-       onChange={handleChange}
-       />
-       </div>
-
-      {/* <label htmlFor="city">City:</label><br />
-      <input type="text" id="city" name="city" value={formData.city} onChange={handleChange} maxLength={100} required /><br /> */}
-
-<div className="form-group">
-       <label htmlFor="city">City</label>
-          <input
-       type="text"
-       placeholder="City"
-       name="city"
-       value={formData.city}
-       onChange={handleChange}
-       />
-       </div>
-{/* 
-      <label htmlFor="province">Province:</label><br />
-      <input type="text" id="province" name="province" value={formData.province} onChange={handleChange} maxLength={100} required /><br /><br /> */}
-
-<div className="form-group">
-       <label htmlFor="province">Province</label>
-          <input
-       type="text"
-       placeholder="Province"
-       name="province"
-       value={formData.province}
-       onChange={handleChange}
-       />
-       </div>
       <div className="form-group">
-       <button type="submit">Submit</button>
-       </div>
+        <label htmlFor="name">Name</label>
+        <input
+          type="text"
+          placeholder="Name"
+          name="name"
+          value={formData.name}
+          onChange={handleChange}
+        />
+      </div>
+
+      <div className="form-group">
+        <label htmlFor="cover_photo">Cover photo</label>
+        <input
+          type="text"
+          placeholder="URL"
+          name="cover_photo"
+          value={formData.cover_photo}
+          onChange={handleChange}
+        />
+      </div>
+
+      <div className="form-group">
+        <label htmlFor="address">Address</label>
+        <input
+          type="text"
+          placeholder="Address"
+          name="address"
+          value={formData.address}
+          onChange={handleChange}
+        />
+      </div>
+
+      <div className="form-group">
+        <label htmlFor="postal_code">Postal Code</label>
+        <input
+          type="text"
+          placeholder="Postal Code"
+          name="postal_code"
+          value={formData.postal_code}
+          onChange={handleChange}
+        />
+      </div>
+
+      <div className="form-group">
+        <label htmlFor="city">City</label>
+        <input
+          type="text"
+          placeholder="City"
+          name="city"
+          value={formData.city}
+          onChange={handleChange}
+        />
+      </div>
+      
+      <div className="form-group">
+        <label htmlFor="province">Province</label>
+        <input
+          type="text"
+          placeholder="Province"
+          name="province"
+          value={formData.province}
+          onChange={handleChange}
+        />
+      </div>
+      <div className="form-group">
+        <button type="submit">Submit</button>
+      </div>
     </form>
-);
+  );
 };
 
 export default LibraryForm;
