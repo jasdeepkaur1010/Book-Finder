@@ -113,7 +113,7 @@ const SingleBookPage = ({ dummyBooks }) => {
       {/* Display ratings and comments if available */}
       {bookRatings.length > 0 && (
         <div>
-          <h2>Book Ratings</h2>
+          <h2>Reviews</h2>
           <ul>
             {bookRatings.map((rating, index) => (
               <li key={index}>

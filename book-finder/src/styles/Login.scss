@@ -1,37 +1,35 @@
-/* Style for the container div */
 .login-container {
-  margin-top: 10px;
+  display: flex;
+  align-items: center;
 }
 
-/* Common button styles */
+.button-container {
+  margin-left: auto; // This will push the button to the right
+}
+
 .button {
-  padding: 10px 20px;
-  font-size: 16px;
+  padding: 10px;
+  font-size: 1rem;
   cursor: pointer;
   border: none;
   border-radius: 5px;
-  transition: background-color 0.3s ease;
-}
+  margin-left: 10px;
 
-/* Style for the login button */
-.login-button {
-  background-color: #4caf50; /* Green color */
-  color: #fff; /* White text */
-}
+  &.login-button {
+    background-color: #007bff;
+    color: white;
 
-/* Style for the logout button */
-.logout-button {
-  background-color: #f44336; /* Red color */
-  color: #fff; /* White text */
-}
+    &:hover {
+      background-color: #0056b3;
+    }
+  }
 
-/* Hover effect for both buttons */
-.button:hover {
-  opacity: 0.8;
-}
+  &.logout-button {
+    background-color: #dc3545;
+    color: white;
 
-/* Center the buttons */
-.button-container {
-  display: flex;
-  justify-content: end;
+    &:hover {
+      background-color: #c82333;
+    }
+  }
 }

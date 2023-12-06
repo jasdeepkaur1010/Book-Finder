@@ -22,12 +22,14 @@ const addBook = (book) => {
       } else {
         const bookQuery = `
     INSERT INTO books (title, author_id, publication_date, genre, isbn, cover_image_url, summary, status, rating)
-    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) returning *
   `;
         const values = [title, author_id, publication_date, genre, isbn, cover_image_url, summary, status, rating];
 
         return db.query(bookQuery, values)
-          .then(() => 'Book added successfully')
+          .then((result) => {
+            console.log(result.rows);
+            return 'Book added successfully'})
           .catch(err => {
             throw new Error(err.message);
           });

@@ -3,7 +3,7 @@ CREATE TABLE libraries (
   id SERIAL PRIMARY KEY,
   UserID INTEGER REFERENCES users(id),
   name VARCHAR(255),
-  cover_photo VARCHAR(255),
+  cover_photo TEXT,
   status VARCHAR(50),
   address VARCHAR(255),
   postal_code VARCHAR(20),

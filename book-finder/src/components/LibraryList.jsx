@@ -24,7 +24,9 @@ function LibraryList() {
 
   const fetchBooksByLibraryId = async (libraryId) => {
     try {
+      console.log('fetchBooksByLibraryId', libraryId);
       const response = await axios.get(`http://localhost:8080/libraries/${libraryId}/books`)
+      console.log(response);
       setBooks(response.data.books);
     } catch (error) {
       console.error('Error fetching books for a library:', error);
@@ -34,6 +36,7 @@ function LibraryList() {
 
   const handleLibraryClick = (libraryId) => {
     setSelectedLibraryId(libraryId);
+    
     fetchBooksByLibraryId(libraryId);
     setSelectedLibrary(libraryId);
   };
@@ -89,7 +92,7 @@ function LibraryList() {
           <h2>Book List</h2>
           <div>
             {books.map(book => (
-              <ul key={book.id}>
+              <div className="book" key={book.id}>
                 <div>
                 <img src={book.cover_image_url} alt={book.name} style={{ width: '300px', height: '300px' }}/>
                   <h3>{book.title}</h3>
@@ -101,7 +104,7 @@ function LibraryList() {
                   <p></p>
                   <BookStatus book={book} libraryId={selectedLibraryId} />
                   </div>
-                      </ul>
+                      </div>
                     ))}
                   </div>
                 </div>
