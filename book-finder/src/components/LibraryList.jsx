@@ -89,7 +89,7 @@ function LibraryList() {
           <h2>Book List</h2>
           <div>
             {books.map(book => (
-              <ul key={book.id}>
+               <div className="book" key={book.id}>
                 <div>
                 <img src={book.cover_image_url} alt={book.name} style={{ width: '300px', height: '300px' }}/>
                   <h3>{book.title}</h3>
@@ -101,7 +101,7 @@ function LibraryList() {
                   <p></p>
                   <BookStatus book={book} libraryId={selectedLibraryId} />
                   </div>
-                      </ul>
+                      </div>
                     ))}
                   </div>
                 </div>
