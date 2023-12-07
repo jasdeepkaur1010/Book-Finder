@@ -4,7 +4,7 @@ const path = require('path');
 const db = require('./db/connection');
 const { getBooks, addBook, searchBooks, getBookReviews, getBookById, updateBookStatus, searchByAuthor } = require('./db/queries/books');
 const { getUsers, getUserBySubId, insertUser,  updateUserIsAdmin, getUserDetailsById } = require('./db/queries/users');
-const { insertLibrary, getLibrary, getLibraryById, getBooksByLibraryId } = require('./db/queries/libraries');
+const { insertLibrary, getLibrary, getLibraryById, getBooksByLibraryId, getLibrariesWithBooks, getBooksInLibraryId } = require('./db/queries/libraries');
 
 
 // Web server config
@@ -251,6 +251,8 @@ app.get('/libraries/:id/books', async (req, res) => {
   }
 });
 
+
+
 // API endpoint to handle user insertion or retrieval based on sub_id
 app.get('/users/:sub_id', async (req, res) => {
   const { sub_id } = req.params;
@@ -377,6 +379,7 @@ app.get('/user/:id', async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
+
 
 
 app.listen(PORT, () => {

@@ -10,22 +10,26 @@
   justify-content: center;
   align-items: center;
   font-family: "Open Sans";
+  
 }
 
 /* Style for the modal content */
 .modal-content {
-  background-color: rgb(255, 255, 255);
+  // background-color: rgb(255, 255, 255);
   padding: 20px;
   border-radius: 5px;
   max-width: 80%;
   max-height: 80%;
   overflow-y: auto; 
+  background-image: url(https://img.freepik.com/free-photo/abstract-blur-defocused-library-book-store-shop-interior_1203-9330.jpg?w=1380&t=st=1701646947~exp=1701647547~hmac=6fa6da45dcfdab2033c751c6ef27444ca0f5cc14f7c938c0860cc4ef1d16f177);
+  
 }
 .modal .modal-content .book {
-  border: 1px groove #ccc; /* Border between each book */
+  border: 1px groove #ccc; 
   padding-bottom: 20px;
-  padding-top: 20px; /* Adjust padding as needed */
-  margin-bottom: 20px; /* Adjust margin as needed */
+  padding-top: 20px; 
+  margin-bottom: 20px; 
+  // background-color:  rgba(255, 255, 255, 0.7);
 }
 // .modal .modal-content .book:last-child {
 //   border-bottom: none; /* Remove border from the last book */
@@ -38,10 +42,17 @@
   cursor: pointer;
   color:  #003566;
 }
+
+
+.library-form-container {
+  padding-top: 30px;
+  padding-bottom: 30px;
+  background-image: url(https://img.freepik.com/free-photo/abstract-blur-defocused-library-book-store-shop-interior_1203-9330.jpg?w=1380&t=st=1701646947~exp=1701647547~hmac=6fa6da45dcfdab2033c751c6ef27444ca0f5cc14f7c938c0860cc4ef1d16f177);
+}
  .library-container {
   display: flex; 
   justify-content: center;
-  // background-image: url(https://img.freepik.com/free-photo/abstract-blur-defocused-library-book-store-shop-interior_1203-9330.jpg?w=1380&t=st=1701646947~exp=1701647547~hmac=6fa6da45dcfdab2033c751c6ef27444ca0f5cc14f7c938c0860cc4ef1d16f177);
+  background-image: url(https://img.freepik.com/free-photo/abstract-blur-defocused-library-book-store-shop-interior_1203-9330.jpg?w=1380&t=st=1701646947~exp=1701647547~hmac=6fa6da45dcfdab2033c751c6ef27444ca0f5cc14f7c938c0860cc4ef1d16f177);
   background-size: top;
   background-position: center;
   text-align: center;
@@ -78,6 +89,7 @@
   border-radius: 5px;
   background-color: #f9f9f9;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  
 }
 
 /* Style for input labels */
@@ -108,3 +120,4 @@
   border-radius: 3px;
   cursor: pointer;
 }
+

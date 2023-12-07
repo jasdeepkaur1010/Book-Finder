@@ -57,7 +57,8 @@ const LibraryForm = () => {
     // <form onSubmit={handleSubmit} className="book-form">
     //   <label htmlFor="UserID">UserID:</label><br />
     //   <input type="number" id="UserID" name="UserID" value={formData.UserID} onChange={handleChange} required /><br />
-
+    <div className="library-form-container">
+    <div className="library-form-background">
     <form onSubmit={handleSubmit} className="library-form">
     <h2>Add a Library</h2>
       {/* <div style={{ display: 'flex', flexDirection: 'column' }}> */}
@@ -157,6 +158,8 @@ const LibraryForm = () => {
        <button type="submit">Submit</button>
        </div>
     </form>
+    </div>
+    </div>
 );
 };
 

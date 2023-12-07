@@ -43,6 +43,17 @@ function LibraryList() {
     setBooks([]);
   };
 
+  const fetchUpdatedBook = async (libraryId, bookId) => {
+    try {
+      const response = await axios.get(`http://localhost:8080/libraries/${libraryId}/books/${bookId}`);
+      return response.data; // Assuming your API returns the updated book data
+    } catch (error) {
+      console.error('Error fetching updated book:', error);
+      throw new Error('Failed to fetch updated book data');
+    }
+  };
+
+  
   const handleSearch = () => {
     const searchTermLowerCase = searchTerm.toLowerCase();
     const filtered = libraries.filter(library =>

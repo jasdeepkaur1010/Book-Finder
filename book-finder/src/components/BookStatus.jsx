@@ -1,12 +1,13 @@
 import { useAuth0 } from "@auth0/auth0-react";
 import React, { useEffect, useState } from "react";
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 const BookStatus = ({ book, libraryId }) => {
   const { user, isAuthenticated } = useAuth0();
   const [isAdmin, setIsAdmin] = useState(false);
   const [status, setStatus] = useState(book.status);
-
+  const navigate = useNavigate();
   useEffect(() => {
     if (isAuthenticated && user) {
       // Fetch user data to check if the user is an admin
@@ -22,11 +23,13 @@ const BookStatus = ({ book, libraryId }) => {
     }
   }, [isAuthenticated, user]);
 
-  const updateBookStatus = async () => {
+  const updateBookStatus = async (newStatus) => {
     if (isAdmin) {
       try {
         await axios.put(`http://localhost:8080/libraries/${libraryId}/books/${book.id}`, { status });
         console.log('Book status updated successfully.');
+        setStatus(status);
+        navigate('/librarylist');
       } catch (error) {
         console.error('Error updating book status:', error);
       }

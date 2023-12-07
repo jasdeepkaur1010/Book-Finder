@@ -25,18 +25,18 @@ const BookForm = ({ handleSubmit}) => {
   const onSubmit = async (e) => {
     e.preventDefault();
    try {
-    const response = await axios.post('http://localhost:8080/books', book)
-    console.log('Book added successfully:', response.data);
-    setBook({ title: '', 
-    author_id: '', 
-    publication_date: '',
-    genre: '', 
-    isbn: '',
-    cover_image_url: '',
-    summary: '', 
-    status: '',
-    rating: '' 
-  });
+  //   const response = await axios.post('http://localhost:8080/books', book)
+  //   console.log('Book added successfully:', response.data);
+  //   setBook({ title: '', 
+  //   author_id: '', 
+  //   publication_date: '',
+  //   genre: '', 
+  //   isbn: '',
+  //   cover_image_url: '',
+  //   summary: '', 
+  //   status: '',
+  //   rating: '' 
+  // });
     handleSubmit(book);
    
   } catch (error) {
