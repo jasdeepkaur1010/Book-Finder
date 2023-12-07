@@ -1,107 +1,133 @@
-/* Style for the modal container */
-.modal {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-}
-
-.modal-content {
-  background-color: #fff;
+.library-container {
+  max-width: 1800px;
+  margin: 0 auto;
   padding: 20px;
-  border-radius: 5px;
-  position: relative;
-  text-align: left;
-}
-.modal .modal-content .book {
-  border: 1px groove #ccc; 
-  padding-bottom: 20px;
-  padding-top: 20px; 
-  margin-bottom: 20px; 
-  background-color:  rgba(255, 255, 255, 0.7);
-}
-/* Style for the close modal */
-.close {
-  float: right;
-  font-size: 28px;
-  font-weight: bold;
-  cursor: pointer;
-  color:  #003566;
-}
- .library-container {
-  display: flex; 
-  justify-content: center;
-  // background-image: url(https://img.freepik.com/free-photo/abstract-blur-defocused-library-book-store-shop-interior_1203-9330.jpg?w=1380&t=st=1701646947~exp=1701647547~hmac=6fa6da45dcfdab2033c751c6ef27444ca0f5cc14f7c938c0860cc4ef1d16f177);
-  background-size: top;
-  background-position: center;
-  text-align: center;
-  flex-wrap: wrap;
-  gap: 20px;
-  color: #003566;
- }
- h1 {
-  font-size: 3rem;
-  color: #003566; 
-  font-weight: bold;
-  margin-bottom: 20px;
-}
-
-.library-list {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
+  flex-direction: column;
+  align-items: center;
 
-}
-.library-item {
-  margin: 10px;
-    padding: 50px;
-    background-color: rgba(255, 255, 255, 0.7);
-    border-radius: 5px;
-    width: 200px; 
-}
+  h1 {
+    font-size: 2em;
+    margin-bottom: 20px;
+  }
 
+  .library-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
 
-/* Style for the book form container */
-.library-form {
-  margin: auto; /* Center the form horizontally */
-  width: 50%; 
-  padding: 40px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  background-color: #f9f9f9;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-}
+    .library-item {
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      overflow: hidden;
+      transition: transform 0.3s ease;
 
-/* Style for input labels */
-.library-form label {
-  margin-bottom: 5px;
-  display: block;
-  font-weight: bold;
-}
+      &:hover {
+        transform: scale(1.05);
+      }
 
-/* Style for input fields */
-.library-form input[type="text"],
-.library-form input[type="number"],
-.library-form textarea {
-  width: 100%;
-  padding: 8px;
-  margin-bottom: 10px;
-  border: 1px solid #ccc;
-  border-radius: 3px;
-  /* Add other styles like font-size, colors, etc. */
-}
+      button {
+        width: 100%;
+        padding: 0;
+        border: none;
+        background: none;
+        cursor: pointer;
+      }
 
-/* Style for the submit button */
-.library-form button {
-  padding: 10px 15px;
-  background-color: #007bff;
-  color: #fff;
-  border: none;
-  border-radius: 3px;
-  cursor: pointer;
+      img {
+        margin: 10px;
+        width: 100%;
+        height: auto;
+        border-radius: 8px 8px 0 0;
+      }
+
+      div {
+        padding: 20px;
+
+        h3 {
+          font-size: 1.5em;
+          margin-bottom: 10px;
+        }
+
+        p {
+          font-size: 1em;
+          color: #777;
+        }
+      }
+    }
+
+    .modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      .modal-content {
+        background: #fff;
+        border-radius: 8px;
+        padding: 20px;
+        max-width: 800px;
+        width: 100%;
+        overflow: auto;
+        position: relative;
+
+        .close {
+          position: absolute;
+          top: 10px;
+          right: 10px;
+          font-size: 1.5em;
+          cursor: pointer;
+          color: #888;
+
+          &:hover {
+            color: #555;
+          }
+        }
+
+        h2 {
+          font-size: 1.8em;
+          margin-bottom: 20px;
+        }
+
+        .books-container {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 20px;
+
+          .book {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+            width: calc(20px); // Adjust as needed
+            margin-bottom: 20px;
+
+            img {
+              width: 100%;
+              height: auto;
+              border-radius: 8px 8px 0 0;
+            }
+
+            div {
+              padding: 20px;
+
+              h3 {
+                font-size: 1.5em;
+                margin-bottom: 10px;
+              }
+
+              p {
+                font-size: 1em;
+                color: #777;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
 }
