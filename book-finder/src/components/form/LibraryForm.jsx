@@ -56,7 +56,7 @@ const LibraryForm = () => {
   return (
     <form onSubmit={handleSubmit} className="library-form">
       <h2>Add a Library</h2>
-      <div className="form-group">
+      {/* <div className="form-group">
         <label htmlFor="UserID">UserID</label>
         <input
           type="text"
@@ -65,7 +65,7 @@ const LibraryForm = () => {
           value={formData.UserID}
           onChange={handleChange}
         />
-      </div>
+      </div> */}
 
       <div className="form-group">
         <label htmlFor="name">Name</label>
